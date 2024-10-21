@@ -81,7 +81,7 @@ class AnnouncementController extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'file' => 'nullable|image|mimes:pdf|max:2048',
+            'file' => 'nullable|mimes:pdf|max:2048',
             'is_for_all' => 'nullable|boolean',
             'target_users' => 'nullable|array',
         ]);

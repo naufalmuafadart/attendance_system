@@ -1,5 +1,14 @@
 @extends('templates.dashboard')
 
+@push('style')
+{{--    <script src="/css/pages/announcements/edit.css" type="module"></script>--}}
+    <link rel="stylesheet" href="/css/pages/announcements/edit.css">
+@endpush
+
+@push('script')
+    <script src="/js/pages/announcements/edit.js" type="module"></script>
+@endpush
+
 @section('isi')
 <div class="row">
     <div class="col-md-12">
@@ -21,8 +30,9 @@
                         <textarea name="content" class="form-control" id="konten" rows="5" required>{{ $announcement->content }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="banner">File</label>
-                        <input type="file" name="file" class="form-control" id="banner" accept="application/pdf">
+                        <label for="inputFile">File</label>
+                        <input type="file" name="file" class="form-control d-none" id="inputFile" accept="application/pdf">
+                        <p id="oldFileNameP">{{ $announcement->file }}<span style='font-size:1em;color:red' class="ml=2" id="oldFileNameCross">&#10006;</span></p>
                     </div>
 
                     <!-- Checkbox for "Ditujukan untuk Semua" -->
