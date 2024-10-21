@@ -1,7 +1,6 @@
 @extends('templates.dashboard')
 
 @push('style')
-{{--    <script src="/css/pages/announcements/edit.css" type="module"></script>--}}
     <link rel="stylesheet" href="/css/pages/announcements/edit.css">
 @endpush
 
@@ -17,17 +16,26 @@
                 <h4>Edit Pengumuman</h4>
             </div>
             <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{ url('/pengumuman/'.$announcement->id.'/update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT') <!-- Menggunakan PUT untuk mengindikasikan pembaruan data -->
 
                     <div class="form-group">
                         <label for="judul">Judul Pengumuman</label>
-                        <input type="text" name="title" class="form-control" id="judul" value="{{ $announcement->title }}" required>
+                        <input type="text" name="title" class="form-control" id="judul" value="{{ old('title') != null ? old('title') : $announcement->title }}" required>
                     </div>
                     <div class="form-group">
                         <label for="konten">Konten Pengumuman</label>
-                        <textarea name="content" class="form-control" id="konten" rows="5" required>{{ $announcement->content }}</textarea>
+                        <textarea name="content" class="form-control" id="konten" rows="5" required>{{ old('content') != null ? old('content') : $announcement->content }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="inputFile">File</label>

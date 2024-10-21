@@ -37,7 +37,6 @@ class AnnouncementController extends Controller
             'target_users' => 'nullable|array',
         ]);
 
-
         $announcement = new Announcement($validated);
 
         if ($request->hasFile('file')) {

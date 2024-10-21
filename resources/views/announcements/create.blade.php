@@ -8,6 +8,15 @@
                 <h4>Tambah Pengumuman</h4>
             </div>
             <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{ url('/pengumuman/tambah-proses') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
