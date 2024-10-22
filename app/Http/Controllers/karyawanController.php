@@ -88,8 +88,15 @@ class karyawanController extends Controller
         ]);
         $nama_file = $request->file('file_excel')->store('file_excel');
 
+//        try {
+//            Excel::import(new UsersImport, public_path('/storage/'.$nama_file));
+//        } catch (\Throwable $th) {
+//            return $th->getMessage();
+//        }
         Excel::import(new UsersImport, public_path('/storage/'.$nama_file));
+
         return back()->with('success', 'Data Berhasil Di Import');
+//        return 'success';
     }
 
     public function tambahKaryawan()

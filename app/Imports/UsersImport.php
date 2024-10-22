@@ -18,28 +18,54 @@ class UsersImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        $jabatan = Jabatan::where('nama_jabatan', $row['jabatan'])->first();
-        if ($jabatan) {
-            $jabatan_id = $jabatan->id;
-        } else {
-            $jabatan_new = Jabatan::create([
-                'nama_jabatan' => $row['jabatan']
-            ]);
-            $jabatan_id = $jabatan_new->id;
+//        $jabatan = Jabatan::where('nama_jabatan', $row['jabatan'])->first();
+//        if ($jabatan == null) {
+//            throw new \Exception($row['jabatan']);
+//        }
+//        if ($jabatan['id'] != null) {
+//            $jabatan_id = $jabatan->id;
+//        } else {
+//            $jabatan_new = Jabatan::create([
+//                'nama_jabatan' => $row['jabatan']
+//            ]);
+//            $jabatan_id = $jabatan_new->id;
+//        }
+        try {
+            $jabatan = Jabatan::where('nama_jabatan', $row['jabatan'])->firstOrFail();
+            $jabatan_id = $jabatan['id'];
+        } catch (\Throwable $th) {
+            $jabatan_id = 15;
         }
 
-        $lokasi = Lokasi::where('nama_lokasi', $row['lokasi'])->first();
-        if ($lokasi) {
-            $lokasi_id = $lokasi->id;
-        } else {
-            $lokasi_new = Lokasi::create([
-                'nama_lokasi' => $row['lokasi'],
-                'created_by' => auth()->user()->id,
-                'status' => 'approved',
-            ]);
-
-            $lokasi_id = $lokasi_new->id;
+        try {
+            $lokasi = Lokasi::where('nama_lokasi', $row['lokasi'])->first();
+            $lokasi_id = $lokasi['id'];
+        } catch (\Throwable $th) {
+            $lokasi_id = 1;
         }
+
+//        $lokasi = Lokasi::where('nama_lokasi', $row['lokasi'])->first();
+//        if ($lokasi['id'] != null) {
+//            $lokasi_id = $lokasi->id;
+//        } else {
+//            $lokasi_new = Lokasi::create([
+//                'nama_lokasi' => $row['lokasi'],
+//                'created_by' => auth()->user()->id,
+//                'status' => 'approved',
+//            ]);
+//
+//            $lokasi_id = $lokasi_new->id;
+//        }
+
+//        throw new \Exception($row["nama"]);
+        try {
+            if ($row["nama"] == null || $row["nama"] == "") {
+                throw new \Exception('');
+            }
+        } catch (\Throwable $th) {
+            return null;
+        }
+
         return new User([
             "name" => $row["nama"],
             "email" => $row["email"],
