@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('announcement')->group(function () {
+    Route::get('/', [AnnouncementController::class, 'getAll']);
     Route::put('/', [AnnouncementController::class, 'update']);
     Route::get('/latest_3', [AnnouncementController::class, 'getLatest3Announcement']);
 });

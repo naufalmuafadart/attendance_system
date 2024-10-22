@@ -214,19 +214,8 @@ class AnnouncementController extends Controller
     public function listuser()
     {
         $title = 'All Announcements';
-        $published_announcements = Announcement::where('is_published', true)->orderBy('created_at', 'desc')->get();
-        $jabatan_id = auth()->user()->jabatan_id;
-        $filtered_announcements = $published_announcements->filter(function ($announcement) use ($jabatan_id) {
-            // Decode the JSON target_users field
-            $target_users = json_decode($announcement->target_users, true);
-
-            // Check if jabatan_id exists in the target_users array
-            return in_array($jabatan_id, $target_users);
-        });
 
         // Return the view with the announcement data
-        return view('announcements.list', compact('filtered_announcements','title'));
+        return view('announcements.list', compact('title'));
     }
-
-
 }

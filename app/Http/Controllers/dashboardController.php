@@ -50,15 +50,6 @@ class dashboardController extends Controller
             } else {
                 $tanggal = $tglskrg;
             }
-            $published_announcements = Announcement::where('is_published', true)->orderBy('created_at', 'desc')->take(3)->get();
-            $jabatan_id = auth()->user()->jabatan_id;
-            $filtered_announcements = $published_announcements->filter(function ($announcement) use ($jabatan_id) {
-                // Decode the JSON target_users field
-                $target_users = json_decode($announcement->target_users, true);
-
-                // Check if jabatan_id exists in the target_users array
-                return in_array($jabatan_id, $target_users);
-            });
 
             $blog = Blog::where('is_published', true)
             ->orderBy('created_at', 'desc')
@@ -70,7 +61,6 @@ class dashboardController extends Controller
             return view('dashboard.indexUser', [
                 'title' => 'Dashboard',
                 'shift_karyawan' => MappingShift::where('user_id', $user_login)->where('tanggal', $tanggal)->first(),
-                'published_announcements' => $filtered_announcements,
                 'news' => $blog,
                 'acara' => $acara
             ]);

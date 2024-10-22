@@ -57,4 +57,27 @@ class EloquentAnnouncementRepository implements AnnouncementRepository {
             throw new CustomException($e->getMessage());
         }
     }
+
+    public function get_all() {
+        try {
+            $announcements = Announcement::where('is_published', true)->orderBy('created_at', 'desc')->take(3)->get();
+            $list_announcement = array();
+            foreach($announcements as $announcement) {
+                $list_announcement[] = new AnnouncementEntity(
+                    $announcement->id,
+                    $announcement->title,
+                    $announcement->content,
+                    $announcement->file,
+                    $announcement->is_for_all,
+                    $announcement->target_users,
+                    $announcement->created_by,
+                    $announcement->updated_at,
+                    $announcement->created_at,
+                );
+            }
+            return $list_announcement;
+        }  catch(\Exception $e) {
+            throw new CustomException($e->getMessage());
+        }
+    }
 }

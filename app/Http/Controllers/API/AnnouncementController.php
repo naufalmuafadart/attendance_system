@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
+use App\UseCases\GetAllAnnouncementUseCase;
 use App\UseCases\GetLatest3AnnouncementUseCase;
 use App\UseCases\UpdateAnnouncementUseCase;
 use Illuminate\Http\Request;
@@ -11,12 +12,15 @@ use Illuminate\Http\Request;
 class AnnouncementController extends Controller {
     protected $updateAnnouncementUseCase;
     protected $getLatest3AnnouncementUseCase;
+    protected $getAllAnnouncementUseCase;
 
     public function __construct(
         UpdateAnnouncementUseCase $updateAnnouncementUseCase,
-        GetLatest3AnnouncementUseCase  $getLatest3AnnouncementUseCase) {
+        GetLatest3AnnouncementUseCase  $getLatest3AnnouncementUseCase,
+        GetAllAnnouncementUseCase $getAllAnnouncementUseCase) {
         $this->updateAnnouncementUseCase = $updateAnnouncementUseCase;
         $this->getLatest3AnnouncementUseCase = $getLatest3AnnouncementUseCase;
+        $this->getAllAnnouncementUseCase = $getAllAnnouncementUseCase;
     }
 
     public function update(Request $request) {
@@ -42,6 +46,28 @@ class AnnouncementController extends Controller {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Successfully update announcement!',
+            ]);
+        } catch (\Exception $e) {
+            if ($e instanceof CustomException) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => $e->getMessage()
+                ], $e->getCode());
+            }
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Internal Server Error',
+            ], 500);
+        }
+    }
+
+    public function getAll() {
+        try {
+            $announcements = $this->getAllAnnouncementUseCase->execute();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully get all announcements',
+                'data' => $announcements,
             ]);
         } catch (\Exception $e) {
             if ($e instanceof CustomException) {
