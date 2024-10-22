@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AnnouncementController;
 use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\UsersController;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('announcement')->group(function () {
-    Route::put('/', [\App\Http\Controllers\API\AnnouncementController::class, 'update']);
+    Route::put('/', [AnnouncementController::class, 'update']);
+    Route::get('/latest_3', [AnnouncementController::class, 'getLatest3Announcement']);
 });
 
 Route::prefix('download')->group(function () {

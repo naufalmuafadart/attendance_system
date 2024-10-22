@@ -188,20 +188,18 @@
 
     <div class="mt-5 mb-9">
         <div class="tf-container">
-            @if ($published_announcements->isNotEmpty())
-                <div class="mt-5">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h3>Pengumuman</h3>
-                        <a href="{{ url('/pengumuman-list') }}" class="primary_color fw_6">View All</a>
-                    </div>
-                    @foreach ($published_announcements as $announcement)
-                        <a class="d-flex justify-content-between mb-2" href="/pengumuman/show/{{ $announcement->id }}">
-                            <p>{{ $announcement->title }}</p>
-                            <p>{{ $announcement->created_at }}</p>
-                        </a>
-                    @endforeach
+            <div class="mt-5 d-none" id="announcementContainer">
+                <div class="d-flex justify-content-between mb-3">
+                    <h3>Pengumuman</h3>
+                    <a href="{{ url('/pengumuman-list') }}" class="primary_color fw_6">View All</a>
                 </div>
-            @endif
+            </div>
+            <template id="announcementTemplate">
+                <a class="d-flex justify-content-between mb-2" href="/pengumuman/show/">
+                    <p class="title"></p>
+                    <p class="created_at"></p>
+                </a>
+            </template>
             <div class="mt-5">
                 <div class="d-flex justify-content-between mb-3">
                         <h3>Informasi</h3>
@@ -267,3 +265,7 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script src="/js/pages/dashboard/indexUser.js"></script>
+@endpush

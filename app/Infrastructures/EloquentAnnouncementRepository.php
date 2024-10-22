@@ -2,6 +2,7 @@
 
 namespace App\Infrastructures;
 
+use App\Entities\Announcement\AnnouncementEntity;
 use App\Entities\Announcement\UpdateAnnouncementEntity;
 use App\Exceptions\CustomException;
 use App\Exceptions\NotFoundException;
@@ -28,6 +29,30 @@ class EloquentAnnouncementRepository implements AnnouncementRepository {
             $model->is_published = $update_announcement->is_published;
             $model->created_by = $update_announcement->created_by;
             $model->save();
+        }  catch(\Exception $e) {
+            throw new CustomException($e->getMessage());
+        }
+    }
+
+    public function get_latest_3()
+    {
+        try {
+            $announcements = Announcement::where('is_published', true)->orderBy('created_at', 'desc')->take(3)->get();
+            $list_announcement = array();
+            foreach($announcements as $announcement) {
+                $list_announcement[] = new AnnouncementEntity(
+                    $announcement->id,
+                    $announcement->title,
+                    $announcement->content,
+                    $announcement->file,
+                    $announcement->is_for_all,
+                    $announcement->target_users,
+                    $announcement->created_by,
+                    $announcement->updated_at,
+                    $announcement->created_at,
+                );
+            }
+            return $list_announcement;
         }  catch(\Exception $e) {
             throw new CustomException($e->getMessage());
         }
