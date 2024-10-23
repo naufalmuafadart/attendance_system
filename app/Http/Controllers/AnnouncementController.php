@@ -208,7 +208,7 @@ class AnnouncementController extends Controller
         $title = $announcement->title;
 
         // Return the view with the announcement data
-        return view('announcements.show', compact('announcement','title'));
+        return view('announcements.show', compact('title'));
     }
 
     public function listuser()

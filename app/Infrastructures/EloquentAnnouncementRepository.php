@@ -12,7 +12,19 @@ use App\Repositories\AnnouncementRepository;
 class EloquentAnnouncementRepository implements AnnouncementRepository {
     public function get_by_id($id) {
         try {
-            return Announcement::findOrFail($id);
+            $announcement = Announcement::findOrFail($id);
+            $announcementEntity = new AnnouncementEntity(
+                $announcement->id,
+                $announcement->title,
+                $announcement->content,
+                $announcement->file,
+                $announcement->is_for_all,
+                $announcement->target_users,
+                $announcement->created_by,
+                $announcement->updated_at,
+                $announcement->created_at,
+            );
+            return $announcementEntity;
         } catch(\Exception $e) {
             throw new NotFoundException('Announcement not found');
         }
