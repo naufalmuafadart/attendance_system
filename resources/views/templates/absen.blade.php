@@ -295,7 +295,7 @@
                         <li>
                             <a href="{{ url('/euforia') }}" class="nav-link">
                                 <i class="fa fa-baby" style="{{ Request::is('euforia*') ? 'color: blue' : 'color: black' }}"></i>
-                                <span style="{{ Request::is('euforia*') ? 'color: blue' : '' }}">Euforia</span>
+                                <span style="{{ Request::is('euforia*') ? 'color: blue' : '' }}">Informasi</span>
                             </a>
                         </li>
                         <li>
