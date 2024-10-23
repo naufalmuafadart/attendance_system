@@ -8,8 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }}</title>
     <!-- Favicon and Touch Icons  -->
-    <link rel="shortcut icon" href="{{ url('/myhr/images/logo.png') }}" />
-    <link rel="apple-touch-icon-precomposed" href="{{ url('/myhr/images/logo.png') }}" />
+    <link rel="shortcut icon" href="{{ url('/myhr/images/logo_absen.png') }}" />
+    <link rel="apple-touch-icon-precomposed" href="{{ url('/myhr/images/logo_absen.png') }}" />
     <!-- Font -->
     <link rel="stylesheet" href="{{ url('/myhr/fonts/fonts.css') }}" />
     <!-- Icons -->
