@@ -20,10 +20,7 @@ use App\Models\Payroll;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
 
-
-
-class karyawanController extends Controller
-{
+class karyawanController extends Controller {
     public function index()
     {
         $search = request()->input('search');
@@ -41,17 +38,13 @@ class karyawanController extends Controller
                 ->paginate(10)
                 ->withQueryString();
 
-
         if (auth()->user()->is_admin == 'admin') {
             return view('karyawan.index', [
                 'title' => 'Pegawai',
                 'data_user' => $data
             ]);
         } else {
-            return view('karyawan.indexUser', [
-                'title' => 'Pegawai',
-                'data_user' => $data
-            ]);
+            return view('karyawan.indexUser', ['title' => 'Pegawai']);
         }
     }
 

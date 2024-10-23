@@ -21,6 +21,11 @@ Route::prefix('announcement')->group(function () {
     Route::get('/', [AnnouncementController::class, 'getAll']);
     Route::put('/', [AnnouncementController::class, 'update']);
     Route::get('/latest_3', [AnnouncementController::class, 'getLatest3Announcement']);
+    Route::get('/get_users_and_their_position', [AnnouncementController::class, 'get_users_and_their_position']);
+});
+
+Route::prefix('user')->group(function () {
+    Route::get('/users_and_their_position', [UsersController::class, 'get_users_and_their_position']);
 });
 
 Route::prefix('download')->group(function () {
