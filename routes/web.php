@@ -91,7 +91,12 @@ Route::get('/pegawai/edit-dinas/{id}', [karyawanController::class, 'editDinas'])
 Route::put('/pegawai/proses-edit-shift/{id}', [karyawanController::class, 'prosesEditShift'])->middleware('auth');
 Route::put('/pegawai/proses-edit-dinas/{id}', [karyawanController::class, 'prosesEditDinas'])->middleware('auth');
 
-Route::get('/absen', [AbsenController::class, 'index'])->middleware('auth');
+Route::prefix('/absen')->group(function () {
+    Route::get('/', [AbsenController::class, 'index'])->middleware('auth');
+    Route::put('/masuk/{id}', [AbsenController::class, 'absenMasuk'])->middleware('auth');
+    Route::put('/pulang/{id}', [AbsenController::class, 'absenPulang'])->middleware('auth');
+});
+
 Route::get('/dinas-luar', [DinasLuar::class, 'index'])->middleware('auth');
 
 Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth');
@@ -103,10 +108,7 @@ Route::get('/menu', [dashboardController::class, 'menu'])->middleware('auth');
 
 Route::get('/my-location', [AbsenController::class, 'myLocation'])->middleware('auth');
 
-Route::put('/absen/masuk/{id}', [AbsenController::class, 'absenMasuk'])->middleware('auth');
 Route::put('/dinas-luar/masuk/{id}', [DinasLuar::class, 'absenMasukDinas'])->middleware('auth');
-
-Route::put('/absen/pulang/{id}', [AbsenController::class, 'absenPulang'])->middleware('auth');
 Route::put('/dinas-luar/pulang/{id}', [DinasLuar::class, 'absenPulangDinas'])->middleware('auth');
 
 Route::get('/data-absen', [AbsenController::class, 'dataAbsen'])->middleware('admin');

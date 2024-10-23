@@ -1,4 +1,4 @@
-@extends('templates.app')
+@extends('templates.absen')
 @section('container')
     <div class="card-secton transfer-section">
         <div class="tf-container">
@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    
+
     <br>
     <style>
         .jam-digital-malasngoding {
@@ -68,7 +68,7 @@
         }
     </script>
     <br>
-    
+
     <div class="d-flex justify-content-center mb-4">
         <form action="{{ url('/my-location') }}" method="get">
             @csrf
@@ -227,5 +227,5 @@
             setInterval(getLocation, 1000);
         </script>
     @endpush
-    
+
 @endsection

@@ -16,8 +16,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AbsenController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         date_default_timezone_set('Asia/Jakarta');
         $user_login = auth()->user()->id;
         $tanggal = "";
@@ -133,9 +132,8 @@ class AbsenController extends Controller
 
             $request->session()->flash('success', 'Berhasil Absen Masuk');
 
-            return redirect('/absen');
+            return redirect('/dashboard');
         }
-
     }
 
     public function absenPulang(Request $request, $id)
@@ -217,7 +215,7 @@ class AbsenController extends Controller
 
             MappingShift::where('id', $id)->update($validatedData);
 
-            return redirect('/absen')->with('success', 'Berhasil Absen Pulang');
+            return redirect('/dashboard')->with('success', 'Berhasil Absen Pulang');
         }
     }
 
