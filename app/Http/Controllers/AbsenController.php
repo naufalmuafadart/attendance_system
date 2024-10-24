@@ -491,8 +491,7 @@ class AbsenController extends Controller
         return redirect('/pengajuan-absensi')->with('success', 'Pengajuan Berhasil Disimpan');
     }
 
-    public function pengajuanAbsensi()
-    {
+    public function pengajuanAbsensi() {
         $title = 'Pengajuan Absensi';
         $search = request()->input('search');
         $jabatan = Jabatan::find(auth()->user()->jabatan_id);

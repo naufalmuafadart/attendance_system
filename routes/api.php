@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\API\AnnouncementController;
 use App\Http\Controllers\API\DownloadController;
+use App\Http\Controllers\API\PengajuanAbsensiController;
+use App\Http\Controllers\API\ShiftController;
 use App\Http\Controllers\API\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,14 @@ Route::prefix('announcement')->group(function () {
     Route::get('/{id}', [AnnouncementController::class, 'get_by_id']);
     Route::put('/', [AnnouncementController::class, 'update']);
     Route::get('/get_users_and_their_position', [AnnouncementController::class, 'get_users_and_their_position']);
+});
+
+Route::prefix('pengajuan_absensi')->group(function () {
+    Route::post('/', [PengajuanAbsensiController::class, 'insert']);
+});
+
+Route::prefix('shift')->group(function () {
+    Route::get('/get_by_user_id_and_date', [ShiftController::class, 'get_by_user_id_and_date']);
 });
 
 Route::prefix('user')->group(function () {

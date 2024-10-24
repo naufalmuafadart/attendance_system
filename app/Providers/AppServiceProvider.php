@@ -3,10 +3,16 @@
 namespace App\Providers;
 
 use App\Infrastructures\EloquentAnnouncementRepository;
+use App\Infrastructures\EloquentMappingShiftRepository;
+use App\Infrastructures\EloquentPengajuanAbsensiRepository;
+use App\Infrastructures\EloquentShiftRepository;
 use App\Infrastructures\EloquentUserRepository;
 use App\Infrastructures\LocalStorageRepository;
 use App\Models\User;
 use App\Repositories\AnnouncementRepository;
+use App\Repositories\MappingShiftRepository;
+use App\Repositories\PengajuanAbsensiRepository;
+use App\Repositories\ShiftRepository;
 use App\Repositories\StorageRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Pagination\Paginator;
@@ -26,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(StorageRepository::class,LocalStorageRepository::class);
         $this->app->bind(AnnouncementRepository::class,EloquentAnnouncementRepository::class);
         $this->app->bind(UserRepository::class,EloquentUserRepository::class);
+        $this->app->bind(PengajuanAbsensiRepository::class,EloquentPengajuanAbsensiRepository::class);
+        $this->app->bind(MappingShiftRepository::class,EloquentMappingShiftRepository::class);
+        $this->app->bind(ShiftRepository::class,EloquentShiftRepository::class);
     }
 
     /**

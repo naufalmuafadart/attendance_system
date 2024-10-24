@@ -16,7 +16,6 @@
                                 </div>
                             </div>
                             <div class="col-2">
-
                                 <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
@@ -29,32 +28,66 @@
     <div id="app-wrap">
         <div class="bill-content">
             <div class="tf-container">
+                <a href="{{ url('/pengajuan-absensi/add') }}" class="btn btn-sm btn-primary ms-4" style="border-radius: 10px">+ Tambah</a>
                 <ul class="mt-3 mb-5">
-                    
-                    @foreach ($mapping_shift as $ms)
-                        @php
-                            $tanggal = new DateTime($ms->tanggal);
-                        @endphp
-                        <li class="list-card-invoice tf-topbar d-flex justify-content-between align-items-center">
-                            <div class="user-info">
-                                @if($ms->User->foto_karyawan == null)
-                                    <img src="{{ url('/assets/img/foto_default.jpg') }}" alt="image">
-                                @else
-                                    <img src="{{ url('/storage/'.$ms->User->foto_karyawan) }}" alt="image">
-                                @endif
+                    <form method="post" class="tf-form p-2" action="{{ url('my-absen/pengajuan-proses/1') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="group-input">
+                            <label for="tanggal">Tanggal</label>
+                            <input type="date" class="@error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="">
+                            <div class="invalid-feedback">
                             </div>
-                            <div class="content-right">
-                                <h4><a href="{{ url('/pengajuan-absensi/edit/'.$ms->id) }}">{{ $ms->User->name }} <span>{{ $ms->status_pengajuan }}</span></a></h4>
-                                <p><a style="color: rgb(141, 141, 141)" href="{{ url('/pengajuan-absensi/edit/'.$ms->id) }}">Attendance Request <span>{{ $tanggal->format('d M Y') }}</span></a></p>
-                                <p><a style="color: rgb(141, 141, 141)" href="{{ url('/pengajuan-absensi/edit/'.$ms->id) }}">{{ $ms->deskripsi }}</a></p>
-                            </div>
-                        </li>
-                    @endforeach
-                    <div class="d-flex justify-content-end me-4 mt-4">
-                        {{ $mapping_shift->links() }}
-                    </div>
-                </ul>
+                        </div>
 
+                        <div class="group-input">
+                            <label for="shift">Shift</label>
+                            <input type="text" class="@error('shift') is-invalid @enderror" id="shift" name="shift" value="" disabled>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Clock in</label>
+                        </div>
+
+                        <div class="group-input">
+                            <label for="jam_masuk_pengajuan">Jam Masuk</label>
+                            <input type="text" class="form-control clockpicker @error('jam_masuk_pengajuan') is-invalid @enderror" id="jam_masuk_pengajuan" name="jam_masuk_pengajuan" autofocus value="">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck2">
+                            <label class="form-check-label" for="exampleCheck2">Clock out</label>
+                        </div>
+
+                        <div class="group-input">
+                            <label for="jam_pulang_pengajuan">Jam Pulang</label>
+                            <input type="text" class="form-control clockpicker @error('jam_pulang_pengajuan') is-invalid @enderror" id="jam_pulang_pengajuan" name="jam_pulang_pengajuan" autofocus value="">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <div class="group-input">
+                            <label for="deskripsi">Deskripsi</label>
+                            <textarea name="deskripsi" id="deskripsi" class="@error('deskripsi') is-invalid @enderror"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <div class="group-input">
+                            <input type="file" class="form-control @error('file_pengajuan') is-invalid @enderror" id="file_pengajuan" name="file_pengajuan">
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="status_pengajuan" value="Menunggu">
+
+                        <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    </form>
+                </ul>
             </div>
         </div>
     </div>
@@ -67,3 +100,24 @@
     <br>
     <br>
 @endsection
+
+@push('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.clockpicker').clockpicker({
+                donetext: 'Done'
+            });
+
+            $('select').select2();
+
+            $('body').on('keyup', '.clockpicker', function (event) {
+                var val = $(this).val();
+                val = val.replace(/[^0-9:]/g, '');
+                val = val.replace(/:+/g, ':');
+                $(this).val(val);
+            });
+        });
+    </script>
+    <script src=""></script>
+@endpush

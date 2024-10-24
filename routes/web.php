@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PengajuanAbsensiController;
 use App\Models\User;
 use App\Events\NotifApproval;
 use App\Events\AnnouncementPublished;
@@ -121,13 +122,20 @@ Route::get('/data-absen/{id}/edit-pulang', [AbsenController::class, 'editPulang'
 Route::put('/data-absen/{id}/proses-edit-pulang', [AbsenController::class, 'prosesEditPulang'])->middleware('admin');
 Route::delete('/data-absen/{id}/delete', [AbsenController::class, 'deleteAdmin'])->middleware('admin');
 
-Route::get('/my-absen', [AbsenController::class, 'myAbsen'])->middleware('auth');
-Route::get('/my-absen/pengajuan/{id}', [AbsenController::class, 'pengajuan'])->middleware('auth');
-Route::post('/my-absen/pengajuan-proses/{id}', [AbsenController::class, 'pengajuanProses'])->middleware('auth');
+Route::prefix('/my-absen')->group(function () {
+    Route::get('/', [AbsenController::class, 'myAbsen'])->middleware('auth');
+    Route::get('/pengajuan/{id}', [AbsenController::class, 'pengajuan'])->middleware('auth');
+    Route::post('/pengajuan-proses/{id}', [AbsenController::class, 'pengajuanProses'])->middleware('auth');
+});
+
 Route::get('/my-dinas-luar', [DinasLuar::class, 'myDinasLuar'])->middleware('auth');
-Route::get('/pengajuan-absensi', [AbsenController::class, 'pengajuanAbsensi'])->middleware('auth');
-Route::get('/pengajuan-absensi/edit/{id}', [AbsenController::class, 'editPengajuanAbsensi'])->middleware('auth');
-Route::post('/pengajuan-absensi/update/{id}', [AbsenController::class, 'updatePengajuanAbsensi'])->middleware('auth');
+
+Route::prefix('/pengajuan-absensi')->group(function () {
+    Route::get('/', [PengajuanAbsensiController::class, 'index'])->middleware('auth');
+    Route::get('/add', [PengajuanAbsensiController::class, 'add'])->middleware('auth');
+    Route::get('/edit/{id}', [AbsenController::class, 'editPengajuanAbsensi'])->middleware('auth');
+    Route::post('/update/{id}', [AbsenController::class, 'updatePengajuanAbsensi'])->middleware('auth');
+});
 
 Route::get('/lembur', [LemburController::class, 'index'])->middleware('auth');
 Route::post('/lembur/masuk', [LemburController::class, 'masuk'])->middleware('auth');
