@@ -58,6 +58,8 @@
     @stack('style')
 </head>
 <body>
+<script src="/js/library/vue/vue.global.js"></script>
+@stack('pre-script')
 <div class="tap-top"><i data-feather="chevrons-up"></i></div>
 <div class="loader-wrapper">
     <div class="loader"></div>
@@ -258,7 +260,7 @@
             </div>
         </div>
         <div class="page-body">
-            <div class="container-fluid default-dash">
+            <div class="container-fluid default-dash" id="app">
                 @yield('isi')
             </div>
         </div>

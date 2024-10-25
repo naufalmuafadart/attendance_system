@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AnnouncementController;
 use App\Http\Controllers\API\DownloadController;
+use App\Http\Controllers\API\MappingShiftController;
 use App\Http\Controllers\API\PengajuanAbsensiController;
 use App\Http\Controllers\API\ShiftController;
 use App\Http\Controllers\API\UsersController;
@@ -37,6 +38,10 @@ Route::prefix('shift')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::get('/users_and_their_position', [UsersController::class, 'get_users_and_their_position']);
+});
+
+Route::prefix('mapping_shift')->group(function () {
+    Route::post('/', [MappingShiftController::class, 'insert']);
 });
 
 Route::prefix('download')->group(function () {
