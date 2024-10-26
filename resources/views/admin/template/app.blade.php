@@ -1,5 +1,5 @@
 <!DOCTYPE html>
- <html lang="en">
+<html lang="en">
 <head>
     @php
         $settings = App\Models\settings::first();
@@ -419,3 +419,4 @@
 @include('sweetalert::alert')
 </body>
 </html>
+

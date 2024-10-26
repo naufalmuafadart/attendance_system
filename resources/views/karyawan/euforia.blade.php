@@ -47,6 +47,7 @@
                 </ul>
                 <div class="content-tab pt-tab-space mb-5">
                     <div class="tab-gift-item">
+                        {{ count($data_user) }}
                         @foreach ($data_user as $user)
                             @php
                                 $tgl_lahir = new DateTime($user->tgl_lahir);

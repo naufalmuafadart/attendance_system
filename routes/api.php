@@ -5,6 +5,7 @@ use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\MappingShiftController;
 use App\Http\Controllers\API\PengajuanAbsensiController;
 use App\Http\Controllers\API\ShiftController;
+use App\Http\Controllers\API\ShiftPatternController;
 use App\Http\Controllers\API\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::prefix('pengajuan_absensi')->group(function () {
 });
 
 Route::prefix('shift')->group(function () {
+    Route::get('/', [ShiftController::class, 'get']);
     Route::get('/get_by_user_id_and_date', [ShiftController::class, 'get_by_user_id_and_date']);
 });
 
@@ -42,6 +44,10 @@ Route::prefix('user')->group(function () {
 
 Route::prefix('mapping_shift')->group(function () {
     Route::post('/', [MappingShiftController::class, 'insert']);
+});
+
+Route::prefix('shift_pattern')->group(function () {
+    Route::post('/', [ShiftPatternController::class, 'insert']);
 });
 
 Route::prefix('download')->group(function () {

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Infrastructures\EloquentAnnouncementRepository;
 use App\Infrastructures\EloquentMappingShiftRepository;
 use App\Infrastructures\EloquentPengajuanAbsensiRepository;
+use App\Infrastructures\EloquentShiftPatternRepository;
 use App\Infrastructures\EloquentShiftRepository;
 use App\Infrastructures\EloquentUserRepository;
 use App\Infrastructures\LocalStorageRepository;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Repositories\AnnouncementRepository;
 use App\Repositories\MappingShiftRepository;
 use App\Repositories\PengajuanAbsensiRepository;
+use App\Repositories\ShiftPatternRepository;
 use App\Repositories\ShiftRepository;
 use App\Repositories\StorageRepository;
 use App\Repositories\UserRepository;
@@ -35,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PengajuanAbsensiRepository::class,EloquentPengajuanAbsensiRepository::class);
         $this->app->bind(MappingShiftRepository::class,EloquentMappingShiftRepository::class);
         $this->app->bind(ShiftRepository::class,EloquentShiftRepository::class);
+        $this->app->bind(ShiftPatternRepository::class,EloquentShiftPatternRepository::class);
     }
 
     /**

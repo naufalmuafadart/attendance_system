@@ -13,6 +13,7 @@ use App\Models\ResetCuti;
 use App\Models\Shift;
 use App\Models\Sip;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Imports\UsersImport;
@@ -52,9 +53,8 @@ class karyawanController extends Controller {
     {
         date_default_timezone_set('Asia/Jakarta');
 
-        $data = User::where('tgl_lahir', date('Y-m-d'))
+        $data = User::where(DB::raw('DAY(tgl_lahir) = DAY(CURRENT_DATE()) AND MONTH(tgl_lahir) = MONTH(CURRENT_DATE)'))
                 ->orderBy('name', 'ASC')
-                ->paginate(10)
                 ->withQueryString();
 
         return view('karyawan.euforia', [

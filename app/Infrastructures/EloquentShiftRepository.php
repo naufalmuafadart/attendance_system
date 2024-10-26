@@ -8,9 +8,11 @@ use App\Repositories\ShiftRepository;
 
 class EloquentShiftRepository implements ShiftRepository
 {
+    function get() {
+        return Shift::get();
+    }
 
-    function get_by_id($id)
-    {
+    function get_by_id($id) {
         try {
             return Shift::findOrFail($id);
         } catch (\Throwable $th) {

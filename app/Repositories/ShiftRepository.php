@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-interface ShiftRepository
-{
+interface ShiftRepository {
+    function get();
     function get_by_id($id);
 }

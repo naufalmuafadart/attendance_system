@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ShiftPatternController;
 use App\Http\Controllers\PengajuanAbsensiController;
 use App\Models\User;
 use App\Events\NotifApproval;
@@ -331,6 +332,13 @@ Route::get('/acara/{id}/edit', [AcaraController::class, 'edit'])->middleware('ad
 Route::put('/acara/{id}/update', [AcaraController::class, 'update'])->middleware('admin');
 Route::delete('/acara/{id}/delete', [AcaraController::class, 'destroy'])->middleware('admin');
 Route::get('/acara/{slug}', [AcaraController::class, 'show'])->middleware('auth');
+
+Route::prefix('/admin')->group(function () {
+    Route::prefix('/shift_pattern')->group(function () {
+        Route::get('/', [ShiftPatternController::class, 'index'])->middleware('admin');
+        Route::get('/add', [ShiftPatternController::class, 'add'])->middleware('admin');
+    });
+});
 
 Route::get('/reset', function () {
     Artisan::call('optimize');
