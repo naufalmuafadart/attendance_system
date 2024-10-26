@@ -1,5 +1,9 @@
 @extends('templates.dashboard')
 
+@push('pre-script')
+    <script src="/js/pages/admin/shift_pattern/index.js" type="module"></script>
+@endpush
+
 @section('isi')
     <div class="row">
         <div class="col-12">
@@ -25,9 +29,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Regular</td>
+                        <tr v-for="(shift_pattern, index) in shift_patterns">
+                            <td>@{{ index + 1 }}</td>
+                            <td>@{{ shift_pattern.name }}</td>
                             <td><a href=""><i class="fa fa-solid fa-edit"></i></a></td>
                         </tr>
                         </tbody>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Exceptions\CustomException;
 use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
+use App\UseCases\ShiftPattern\GetUseCase;
 use App\UseCases\ShiftPattern\InsertUseCase;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,14 @@ class ShiftPatternController extends Controller {
      */
     private $insertUseCase;
 
-    public function __construct(InsertUseCase $insertUseCase) {
+    /**
+     * @var GetUseCase
+     */
+    private $getUseCase;
+
+    public function __construct(InsertUseCase $insertUseCase, GetUseCase $getUseCase) {
         $this->insertUseCase = $insertUseCase;
+        $this->getUseCase = $getUseCase;
     }
 
     public function insert(Request $request): \Illuminate\Http\JsonResponse
@@ -43,6 +50,22 @@ class ShiftPatternController extends Controller {
                 201,
                 'Success add shift pattern',
                 [],
+                'success');
+        } catch (\Exception $exception) {
+            if ($exception instanceof CustomException) {
+                return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');
+            }
+            return APIFormatter::createApi(500, 'Internal server error', [], 'fail');
+        }
+    }
+
+    public function get(): \Illuminate\Http\JsonResponse {
+        try {
+            $shift_patterns = $this->getUseCase->execute();
+            return APIFormatter::createApi(
+                200,
+                'Success get shift patterns',
+                $shift_patterns,
                 'success');
         } catch (\Exception $exception) {
             if ($exception instanceof CustomException) {

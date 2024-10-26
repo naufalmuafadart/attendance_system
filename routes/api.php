@@ -47,6 +47,7 @@ Route::prefix('mapping_shift')->group(function () {
 });
 
 Route::prefix('shift_pattern')->group(function () {
+    Route::get('/', [ShiftPatternController::class, 'get']);
     Route::post('/', [ShiftPatternController::class, 'insert']);
 });
 
