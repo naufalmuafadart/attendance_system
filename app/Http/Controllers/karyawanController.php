@@ -52,10 +52,9 @@ class karyawanController extends Controller {
     public function euforia()
     {
         date_default_timezone_set('Asia/Jakarta');
-
-        $data = User::where(DB::raw('DAY(tgl_lahir) = DAY(CURRENT_DATE()) AND MONTH(tgl_lahir) = MONTH(CURRENT_DATE)'))
-                ->orderBy('name', 'ASC')
-                ->withQueryString();
+        $data = User::
+            whereRaw('MONTH(tgl_lahir) = MONTH(CURRENT_DATE) AND DAY(tgl_lahir) = DAY(CURRENT_DATE)')
+            ->get();
 
         return view('karyawan.euforia', [
             'title' => 'Euforia',
