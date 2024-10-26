@@ -32,7 +32,7 @@
                         <tr v-for="(shift_pattern, index) in shift_patterns">
                             <td>@{{ index + 1 }}</td>
                             <td>@{{ shift_pattern.name }}</td>
-                            <td><a href=""><i class="fa fa-solid fa-edit"></i></a></td>
+                            <td><a :href="`/admin/shift_pattern/edit/${shift_pattern.id}`"><i class="fa fa-solid fa-edit"></i></a></td>
                         </tr>
                         </tbody>
                     </table>

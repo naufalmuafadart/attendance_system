@@ -21,4 +21,12 @@ class ShiftPatternController extends Controller
         ];
         return view('admin.shift_pattern.add', $data);
     }
+
+    public function edit($id) {
+        $data = [
+            'id' => $id,
+            'title' => 'Edit Shift Pattern',
+        ];
+        return view('admin.shift_pattern.edit', $data);
+    }
 }

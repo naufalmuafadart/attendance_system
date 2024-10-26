@@ -40,6 +40,7 @@ Route::prefix('shift')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::get('/users_and_their_position', [UsersController::class, 'get_users_and_their_position']);
+    Route::get('/shift_pattern/{id}', [UsersController::class, 'get_by_shift_pattern_id']);
 });
 
 Route::prefix('mapping_shift')->group(function () {
@@ -49,6 +50,8 @@ Route::prefix('mapping_shift')->group(function () {
 Route::prefix('shift_pattern')->group(function () {
     Route::get('/', [ShiftPatternController::class, 'get']);
     Route::post('/', [ShiftPatternController::class, 'insert']);
+    Route::post('/assign_user', [ShiftPatternController::class, 'assign_user']);
+    Route::get('/{id}', [ShiftPatternController::class, 'get_by_id']);
 });
 
 Route::prefix('download')->group(function () {

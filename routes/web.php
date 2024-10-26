@@ -337,6 +337,7 @@ Route::prefix('/admin')->group(function () {
     Route::prefix('/shift_pattern')->group(function () {
         Route::get('/', [ShiftPatternController::class, 'index'])->middleware('admin');
         Route::get('/add', [ShiftPatternController::class, 'add'])->middleware('admin');
+        Route::get('/edit/{id}', [ShiftPatternController::class, 'edit'])->middleware('admin');
     });
 });
 

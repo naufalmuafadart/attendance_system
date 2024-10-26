@@ -54,7 +54,7 @@ const app = createApp({
                 "is_lock_location": this.isLockLocation,
             };
             document.getElementById('btnSubmitAssign').disabled = false;
-            // console.log(data);
+
             const response = await fetch('/api/mapping_shift', {
                 method: 'POST',
                 body: JSON.stringify(data),

@@ -3,8 +3,10 @@
 namespace App\Infrastructures;
 
 use App\Entities\ShiftPattern\RegisterShiftPatternEntity;
+use App\Exceptions\NotFoundException;
 use App\Models\ShiftPattern;
 use App\Repositories\ShiftPatternRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentShiftPatternRepository implements ShiftPatternRepository {
 
@@ -21,8 +23,18 @@ class EloquentShiftPatternRepository implements ShiftPatternRepository {
         $model->save();
     }
 
-    public function get()
-    {
+    public function get() {
         return ShiftPattern::all();
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function get_by_id(int $id) {
+        try {
+            return ShiftPattern::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('ShiftPattern not found');
+        }
     }
 }

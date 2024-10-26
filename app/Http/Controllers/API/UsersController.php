@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\UseCases\Users\GetByShiftPatternUseCase;
 use App\UseCases\Users\GetUsersAndTheirPositionUseCase;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,8 +15,16 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
     private $getUsersAndTheirPositionUseCase;
-    public function __construct(GetUsersAndTheirPositionUseCase $getUsersAndTheirPositionUseCase) {
+    /**
+     * @var GetByShiftPatternUseCase
+     */
+    private $getByShiftPatternUseCase;
+
+    public function __construct(
+        GetUsersAndTheirPositionUseCase $getUsersAndTheirPositionUseCase,
+        GetByShiftPatternUseCase $getByShiftPatternUseCase) {
         $this->getUsersAndTheirPositionUseCase = $getUsersAndTheirPositionUseCase;
+        $this->getByShiftPatternUseCase = $getByShiftPatternUseCase;
     }
 
     public function index() {
@@ -53,6 +62,18 @@ class UsersController extends Controller
         try {
             $data = $this->getUsersAndTheirPositionUseCase->execute();
             return ApiFormatter::createApi(200, 'Success get users and their position', $data);
+        } catch (Exception $e) {
+            if ($e instanceof CustomException) {
+                return ApiFormatter::createApi($e->getCode(), $e->getMessage());
+            }
+            return ApiFormatter::createApi(400, 'Internal Server Error');
+        }
+    }
+
+    public function get_by_shift_pattern_id($id) {
+        try {
+            $users = $this->getByShiftPatternUseCase->execute($id);
+            return ApiFormatter::createApi(200, 'Success get users by shift pattern id', $users);
         } catch (Exception $e) {
             if ($e instanceof CustomException) {
                 return ApiFormatter::createApi($e->getCode(), $e->getMessage());
