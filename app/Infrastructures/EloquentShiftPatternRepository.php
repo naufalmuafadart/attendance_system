@@ -37,4 +37,8 @@ class EloquentShiftPatternRepository implements ShiftPatternRepository {
             throw new NotFoundException('ShiftPattern not found');
         }
     }
+
+    public function get_all_id() {
+        return ShiftPattern::pluck('id')->toArray();
+    }
 }

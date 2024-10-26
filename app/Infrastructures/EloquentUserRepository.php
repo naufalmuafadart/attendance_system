@@ -49,4 +49,8 @@ class EloquentUserRepository implements UserRepository {
     public function getByShiftPatternId($shiftPatternId) {
         return User::where('shift_pattern_id', $shiftPatternId)->get();
     }
+
+    public function getArrIdByShiftPatternId($shiftPatternId) {
+        return User::where('shift_pattern_id', $shiftPatternId)->pluck('id')->toArray();
+    }
 }
