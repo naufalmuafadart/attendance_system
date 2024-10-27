@@ -22,37 +22,37 @@
     <br>
     <style>
         .jam-digital-malasngoding {
-          overflow: hidden;
-          float: center;
-          width: 100px;
-          margin: 2px auto;
-          border: 0px solid #efefef;
+            overflow: hidden;
+            float: center;
+            width: 100px;
+            margin: 2px auto;
+            border: 0px solid #efefef;
         }
 
         .kotak {
-          float: left;
-          width: 30px;
-          height: 30px;
-          background-color: #189fff;
+            float: left;
+            width: 30px;
+            height: 30px;
+            background-color: #189fff;
         }
 
         .jam-digital-malasngoding p {
-          color: #fff;
-          font-size: 16px;
-          text-align: center;
-          margin-top: 3px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 3px;
         }
     </style>
 
     <div class="jam-digital-malasngoding">
         <div class="kotak">
-          <p id="jam"></p>
+            <p id="jam"></p>
         </div>
         <div class="kotak">
-          <p id="menit"></p>
+            <p id="menit"></p>
         </div>
         <div class="kotak">
-          <p id="detik"></p>
+            <p id="detik"></p>
         </div>
     </div>
 
@@ -112,14 +112,14 @@
                                     </div>
                                 @enderror
                             </div>
-                            @endif
-                            <input type="hidden" name="jam_absen">
-                            <input type="hidden" name="foto_jam_absen" class="image-tag">
-                            <input type="hidden" name="lat_absen" id="lat">
-                            <input type="hidden" name="long_absen" id="long">
-                            <input type="hidden" name="telat">
-                            <input type="hidden" name="jarak_masuk">
-                            <input type="hidden" name="status_absen">
+                        @endif
+                        <input type="hidden" name="jam_absen">
+                        <input type="hidden" name="foto_jam_absen" class="image-tag">
+                        <input type="hidden" name="lat_absen" id="lat">
+                        <input type="hidden" name="long_absen" id="long">
+                        <input type="hidden" name="telat">
+                        <input type="hidden" name="jarak_masuk">
+                        <input type="hidden" name="status_absen">
                         <button type="submit" class="tf-btn accent large" onClick="take_snapshot()">Save</button>
                     </div>
                 </form>
@@ -166,13 +166,13 @@
                                     </div>
                                 @enderror
                             </div>
-                            @endif
-                            <input type="hidden" name="jam_pulang">
-                            <input type="hidden" name="foto_jam_pulang" class="image-tag">
-                            <input type="hidden" name="lat_pulang" id="lat">
-                            <input type="hidden" name="long_pulang" id="long">
-                            <input type="hidden" name="pulang_cepat">
-                            <input type="hidden" name="jarak_pulang">
+                        @endif
+                        <input type="hidden" name="jam_pulang">
+                        <input type="hidden" name="foto_jam_pulang" class="image-tag">
+                        <input type="hidden" name="lat_pulang" id="lat">
+                        <input type="hidden" name="long_pulang" id="long">
+                        <input type="hidden" name="pulang_cepat">
+                        <input type="hidden" name="jarak_pulang">
                         <button type="submit" class="tf-btn accent large" onClick="take_snapshot()">Save</button>
                     </div>
                 </form>
@@ -183,22 +183,21 @@
                 <br>
                 <script type="text/javascript" src="{{ url('webcamjs/webcam.min.js') }}"></script>
                 <script language="JavaScript">
-                Webcam.set({
-                    width: 310,
-                    height: 420,
-                    image_format: 'jpeg',
-                    jpeg_quality: 50
-                });
-                Webcam.attach( '.webcam' );
+                    Webcam.set({
+                        width: 310,
+                        height: 420,
+                        image_format: 'jpeg',
+                        jpeg_quality: 50
+                    });
+                    Webcam.attach( '.webcam' );
                 </script>
                 <script language="JavaScript">
-                function take_snapshot() {
-                    Webcam.snap( function(data_uri) {
+                    function take_snapshot() {
+                        Webcam.snap( function(data_uri) {
                             $(".image-tag").val(data_uri);
-                    document.getElementById('results').innerHTML =
-                        '<img src="'+data_uri+'"/>';
-                    } );
-                }
+                            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+                        });
+                    }
                 </script>
             @else
                 <center>
@@ -227,5 +226,4 @@
             setInterval(getLocation, 1000);
         </script>
     @endpush
-
 @endsection

@@ -8,48 +8,38 @@ use App\Models\Lokasi;
 use App\Models\Jabatan;
 use App\Exports\AbsenExport;
 use App\Models\MappingShift;
+use App\UseCases\front_end\MappingShift\GetMappingShiftForAttendanceUseCase;
 use Illuminate\Http\Request;
 use App\Events\NotifApproval;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class AbsenController extends Controller
-{
+class AbsenController extends Controller {
+    /**
+     * @var GetMappingShiftForAttendanceUseCase
+     */
+    private $getMappingShiftForAttendanceUseCase;
+
+    public function __construct(GetMappingShiftForAttendanceUseCase $getMappingShiftForAttendanceUseCase) {
+        $this->getMappingShiftForAttendanceUseCase = $getMappingShiftForAttendanceUseCase;
+    }
+
     public function index() {
-        date_default_timezone_set('Asia/Jakarta');
-        $user_login = auth()->user()->id;
-        $tanggal = "";
-        $tglskrg = date('Y-m-d');
-        $tglkmrn = date('Y-m-d', strtotime('-1 days'));
-        $mapping_shift = MappingShift::where('user_id', $user_login)->where('tanggal', $tglkmrn)->get();
-        if($mapping_shift->count() > 0) {
-            foreach($mapping_shift as $mp) {
-                $jam_absen = $mp->jam_absen;
-                $jam_pulang = $mp->jam_pulang;
-            }
-        } else {
-            $jam_absen = "-";
-            $jam_pulang = "-";
-        }
-        if($jam_absen != null && $jam_pulang == null) {
-            $tanggal = $tglkmrn;
-        } else {
-            $tanggal = $tglskrg;
-        }
+        $user_id = auth()->user()->id;
+        $mapping_shift = $this->getMappingShiftForAttendanceUseCase->execute($user_id);
 
         if (auth()->user()->is_admin == 'admin') {
             return view('absen.index', [
                 'title' => 'Absen',
-                'shift_karyawan' => MappingShift::where('user_id', $user_login)->where('tanggal', $tanggal)->first()
+                'shift_karyawan' => $mapping_shift,
             ]);
         } else {
             return view('absen.indexUser', [
                 'title' => 'Absen',
-                'shift_karyawan' => MappingShift::where('user_id', $user_login)->where('tanggal', $tanggal)->first()
+                'shift_karyawan' => $mapping_shift,
             ]);
         }
-
     }
 
     public function myLocation(Request $request)

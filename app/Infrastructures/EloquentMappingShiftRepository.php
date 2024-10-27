@@ -9,6 +9,7 @@ use App\Models\MappingShift;
 use App\Repositories\MappingShiftRepository;
 use DateInterval;
 use DatePeriod;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentMappingShiftRepository implements MappingShiftRepository {
     public function get_shift_id_by_user_id_and_date($user_id, $date) {
@@ -45,6 +46,14 @@ class EloquentMappingShiftRepository implements MappingShiftRepository {
             }
         } catch(\Exception $e) {
             throw new CustomException($e->getMessage());
+        }
+    }
+
+    public function get_by_user_id_and_date($user_id, $date) {
+        try {
+            return MappingShift::where('user_id', $user_id)->where('tanggal', $date)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('Mapping Shift not found');
         }
     }
 }
