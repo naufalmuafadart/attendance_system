@@ -36,6 +36,9 @@ class EloquentMappingShiftRepository implements MappingShiftRepository {
                     $model->telat = 0;
                     $model->pulang_cepat = 0;
                     $model->status_absen = 'Tidak Masuk';
+                    if ($model->shift_id == 1) {
+                        $model->status_absen = 'Libur';
+                    }
                     $model->lock_location = $entity->is_lock_location ? 1 : 0;
                     $model->save();
                 }
