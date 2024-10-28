@@ -56,4 +56,13 @@ class EloquentMappingShiftRepository implements MappingShiftRepository {
             throw new NotFoundException('Mapping Shift not found');
         }
     }
+
+    public function get_id_by_user_id_and_date($user_id, $date) {
+        try {
+            $ms = MappingShift::where('user_id', $user_id)->where('tanggal', $date)->firstOrFail();
+            return $ms->id;
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('Mapping Shift not found');
+        }
+    }
 }
