@@ -11,5 +11,6 @@ interface UserRepository
     public function resetTwoWeekShiftPatternIdByShiftPatternId($twoWeekShiftPatternId);
     public function getByShiftPatternId($shiftPatternId);
     public function getArrIdByShiftPatternId($shiftPatternId);
+    public function getArrIdByTwoWeekShiftPatternId($twoWeekShiftPatternId);
     public function getByTwoWeekShiftPatternId($twoWeekShiftPatternId);
 }

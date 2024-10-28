@@ -43,4 +43,8 @@ class EloquentTwoWeekShiftPatternRepository implements TwoWeekShiftPatternReposi
         $model->second_sunday_shift_id = $entity->second_sunday_shift_id;
         $model->save();
     }
+
+    public function get_all_id() {
+        return TwoWeekShiftPattern::pluck('id')->toArray();
+    }
 }
