@@ -12,6 +12,9 @@ class EloquentShiftRepository implements ShiftRepository
         return Shift::get();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     function get_by_id($id) {
         try {
             return Shift::findOrFail($id);

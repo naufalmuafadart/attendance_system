@@ -4,7 +4,6 @@ namespace App\Infrastructures;
 
 use App\Exceptions\CustomException;
 use App\Exceptions\NotFoundException;
-use App\Models\ShiftPattern;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -77,5 +76,16 @@ class EloquentUserRepository implements UserRepository {
 
     public function getByTwoWeekShiftPatternId($shiftPatternId) {
         return User::where('two_week_shift_pattern_id', $shiftPatternId)->get();
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function getById($id) {
+        try {
+            return User::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('shift pattern not found');
+        }
     }
 }
