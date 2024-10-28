@@ -42,8 +42,25 @@ class EloquentUserRepository implements UserRepository {
         }
     }
 
+    public function updateTwoWeekShiftPatternId($id, $twoWeekShiftPatternId) {
+        try {
+            $user = User::findOrFail($id);
+            $user->two_week_shift_pattern_id = $twoWeekShiftPatternId;
+            $user->save();
+        } catch (\Exception $e) {
+            if ($e instanceof ModelNotFoundException) {
+                throw new NotFoundException('shift pattern not found');
+            }
+            throw new CustomException($e->getMessage());
+        }
+    }
+
     public function resetShiftPatternIdByShiftPatternId($shiftPatternId) {
         User::where('shift_pattern_id', $shiftPatternId)->update(['shift_pattern_id' => null]);
+    }
+
+    public function resetTwoWeekShiftPatternIdByShiftPatternId($twoWeekShiftPatternId) {
+        User::where('two_week_shift_pattern_id', $twoWeekShiftPatternId)->update(['two_week_shift_pattern_id' => null]);
     }
 
     public function getByShiftPatternId($shiftPatternId) {
@@ -52,5 +69,9 @@ class EloquentUserRepository implements UserRepository {
 
     public function getArrIdByShiftPatternId($shiftPatternId) {
         return User::where('shift_pattern_id', $shiftPatternId)->pluck('id')->toArray();
+    }
+
+    public function getByTwoWeekShiftPatternId($shiftPatternId) {
+        return User::where('two_week_shift_pattern_id', $shiftPatternId)->get();
     }
 }

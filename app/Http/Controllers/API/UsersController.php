@@ -7,6 +7,7 @@ use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\UseCases\Users\GetByShiftPatternUseCase;
+use App\UseCases\Users\GetByTwoWeekShiftPatternUseCase;
 use App\UseCases\Users\GetUsersAndTheirPositionUseCase;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,11 +21,18 @@ class UsersController extends Controller
      */
     private $getByShiftPatternUseCase;
 
+    /**
+     * @var GetByTwoWeekShiftPatternUseCase
+     */
+    private $getByTwoWeekShiftPatternUseCase;
+
     public function __construct(
         GetUsersAndTheirPositionUseCase $getUsersAndTheirPositionUseCase,
-        GetByShiftPatternUseCase $getByShiftPatternUseCase) {
+        GetByShiftPatternUseCase $getByShiftPatternUseCase,
+        GetByTwoWeekShiftPatternUseCase $getByTwoWeekShiftPatternUseCase) {
         $this->getUsersAndTheirPositionUseCase = $getUsersAndTheirPositionUseCase;
         $this->getByShiftPatternUseCase = $getByShiftPatternUseCase;
+        $this->getByTwoWeekShiftPatternUseCase = $getByTwoWeekShiftPatternUseCase;
     }
 
     public function index() {
@@ -73,6 +81,18 @@ class UsersController extends Controller
     public function get_by_shift_pattern_id($id) {
         try {
             $users = $this->getByShiftPatternUseCase->execute($id);
+            return ApiFormatter::createApi(200, 'Success get users by shift pattern id', $users);
+        } catch (Exception $e) {
+            if ($e instanceof CustomException) {
+                return ApiFormatter::createApi($e->getCode(), $e->getMessage());
+            }
+            return ApiFormatter::createApi(400, 'Internal Server Error');
+        }
+    }
+
+    public function get_by_two_week_shift_pattern_id($id) {
+        try {
+            $users = $this->getByTwoWeekShiftPatternUseCase->execute($id);
             return ApiFormatter::createApi(200, 'Success get users by shift pattern id', $users);
         } catch (Exception $e) {
             if ($e instanceof CustomException) {

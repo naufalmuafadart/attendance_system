@@ -7,7 +7,7 @@ const app = createApp({
         };
     },
     async mounted() {
-        const response = await fetch('/api/shift_pattern');
+        const response = await fetch('/api/two_week_shift_pattern');
         const responseJSON = await response.json();
         if (response.status === 200) {
             this.shift_patterns = responseJSON['data'];

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ShiftPatternController;
+use App\Http\Controllers\Admin\TwoWeekShiftPatternController;
 use App\Http\Controllers\PengajuanAbsensiController;
 use App\Models\User;
 use App\Events\NotifApproval;
@@ -337,6 +338,11 @@ Route::prefix('/admin')->group(function () {
         Route::get('/', [ShiftPatternController::class, 'index'])->middleware('admin');
         Route::get('/add', [ShiftPatternController::class, 'add'])->middleware('admin');
         Route::get('/edit/{id}', [ShiftPatternController::class, 'edit'])->middleware('admin');
+    });
+    Route::prefix('two_week_shift_pattern')->group(function () {
+        Route::get('/', [TwoWeekShiftPatternController::class, 'index'])->middleware('admin');
+        Route::get('/add', [TwoWeekShiftPatternController::class, 'add'])->middleware('admin');
+        Route::get('/edit/{id}', [TwoWeekShiftPatternController::class, 'edit'])->middleware('admin');
     });
 });
 

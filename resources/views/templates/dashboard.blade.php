@@ -202,6 +202,10 @@
                                     </li>
 
                                     <li class="sidebar-list">
+                                        <a class="sidebar-link sidebar-title link-nav" href="{{ url('/admin/two_week_shift_pattern') }}"><i data-feather="git-pull-request"> </i><span>2 Week Shift Pattern</span></a>
+                                    </li>
+
+                                    <li class="sidebar-list">
                                         <a class="sidebar-link sidebar-title link-nav" href="{{ url('/rekap-data') }}"><i data-feather="credit-card"> </i><span>Rekap Data</span></a>
                                     </li>
 

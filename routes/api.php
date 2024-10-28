@@ -6,6 +6,7 @@ use App\Http\Controllers\API\MappingShiftController;
 use App\Http\Controllers\API\PengajuanAbsensiController;
 use App\Http\Controllers\API\ShiftController;
 use App\Http\Controllers\API\ShiftPatternController;
+use App\Http\Controllers\API\TwoWeekShiftPatternController;
 use App\Http\Controllers\API\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,7 @@ Route::prefix('shift')->group(function () {
 Route::prefix('user')->group(function () {
     Route::get('/users_and_their_position', [UsersController::class, 'get_users_and_their_position']);
     Route::get('/shift_pattern/{id}', [UsersController::class, 'get_by_shift_pattern_id']);
+    Route::get('/two_week_shift_pattern/{id}', [UsersController::class, 'get_by_two_week_shift_pattern_id']);
 });
 
 Route::prefix('mapping_shift')->group(function () {
@@ -52,6 +54,13 @@ Route::prefix('shift_pattern')->group(function () {
     Route::post('/', [ShiftPatternController::class, 'insert']);
     Route::post('/assign_user', [ShiftPatternController::class, 'assign_user']);
     Route::get('/{id}', [ShiftPatternController::class, 'get_by_id']);
+});
+
+Route::prefix('two_week_shift_pattern')->group(function () {
+    Route::get('/', [TwoWeekShiftPatternController::class, 'get']);
+    Route::get('/{id}', [TwoWeekShiftPatternController::class, 'get_by_id']);
+    Route::post('/assign_user', [TwoWeekShiftPatternController::class, 'assign_user']);
+    Route::post('/', [TwoWeekShiftPatternController::class, 'insert']);
 });
 
 Route::prefix('download')->group(function () {
