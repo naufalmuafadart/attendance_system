@@ -86,7 +86,7 @@ const setupPage = () => {
         const file = await responseBlob.blob();
         formData.append('file', file, file_name);
 
-        const response = await fetch('/api/pengajuan_absensi', {
+        const response = await fetch('/api/attendance_request', {
             method: 'POST',
             body: formData,
         });

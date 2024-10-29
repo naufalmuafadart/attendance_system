@@ -9,4 +9,6 @@ interface MappingShiftRepository {
     public function insert(RegisterMappingShiftEntity $entity);
     public function get_by_user_id_and_date($user_id, $date);
     public function get_id_by_user_id_and_date($user_id, $date);
+    public function update_clock_in($id, $clock_in);
+    public function update_clock_out($id, $clock_out);
 }

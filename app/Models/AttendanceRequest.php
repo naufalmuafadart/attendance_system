@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PengajuanAbsen extends Model
+class AttendanceRequest extends Model
 {
-    protected $table = 'pengajuan_absen';
+    public $table = 'attendance_requests';
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttendanceRequestController as AdminAttendanceRequestController;
 use App\Http\Controllers\Admin\ShiftPatternController;
 use App\Http\Controllers\Admin\TwoWeekShiftPatternController;
 use App\Http\Controllers\PengajuanAbsensiController;
@@ -343,6 +344,9 @@ Route::prefix('/admin')->group(function () {
         Route::get('/', [TwoWeekShiftPatternController::class, 'index'])->middleware('admin');
         Route::get('/add', [TwoWeekShiftPatternController::class, 'add'])->middleware('admin');
         Route::get('/edit/{id}', [TwoWeekShiftPatternController::class, 'edit'])->middleware('admin');
+    });
+    Route::prefix('attendance_request')->group(function () {
+        Route::get('/', [AdminAttendanceRequestController::class, 'index'])->middleware('admin');
     });
 });
 

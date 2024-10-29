@@ -65,4 +65,29 @@ class EloquentMappingShiftRepository implements MappingShiftRepository {
             throw new NotFoundException('Mapping Shift not found');
         }
     }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function update_clock_in($id, $clock_in)
+    {
+       try {
+           $ms = MappingShift::findOrFail($id);
+           $ms->jam_absen = $clock_in;
+           $ms->save();
+       } catch (ModelNotFoundException $e) {
+           throw new NotFoundException('Mapping Shift not found');
+       }
+    }
+
+    public function update_clock_out($id, $clock_out)
+    {
+        try {
+            $ms = MappingShift::findOrFail($id);
+            $ms->jam_pulang = $clock_out;
+            $ms->save();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('Mapping Shift not found');
+        }
+    }
 }

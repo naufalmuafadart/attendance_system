@@ -4,14 +4,14 @@ namespace App\UseCases\PengajuanAbsen;
 
 use App\Entities\PengajuanAbsen\RegisterPengajuanAbsenEntity;
 use App\Repositories\MappingShiftRepository;
-use App\Repositories\PengajuanAbsensiRepository;
+use App\Repositories\AttendanceRequestRepository;
 use App\Repositories\StorageRepository;
 
 class InsertUseCase {
     public function __construct(
-        PengajuanAbsensiRepository $pengajuanAbsenRepository,
-        StorageRepository $storageRepository,
-        MappingShiftRepository $mappingShiftRepository) {
+        AttendanceRequestRepository $pengajuanAbsenRepository,
+        StorageRepository           $storageRepository,
+        MappingShiftRepository      $mappingShiftRepository) {
         $this->pengajuanAbsenRepository = $pengajuanAbsenRepository;
         $this->storageRepository = $storageRepository;
         $this->mappingShiftRepository = $mappingShiftRepository;

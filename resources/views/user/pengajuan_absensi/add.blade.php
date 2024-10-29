@@ -122,5 +122,5 @@
             });
         });
     </script>
-    <script src="/js/pages/pengajuan_absensi/add.js"></script>
+    <script src="/js/pages/user/pengajuan_absensi/add.js"></script>
 @endpush

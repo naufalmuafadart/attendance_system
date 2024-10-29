@@ -206,6 +206,10 @@
                                     </li>
 
                                     <li class="sidebar-list">
+                                        <a class="sidebar-link sidebar-title link-nav" href="{{ url('/admin/attendance_request') }}"><i data-feather="file-plus"> </i><span>Pengajuan Absen</span></a>
+                                    </li>
+
+                                    <li class="sidebar-list">
                                         <a class="sidebar-link sidebar-title link-nav" href="{{ url('/rekap-data') }}"><i data-feather="credit-card"> </i><span>Rekap Data</span></a>
                                     </li>
 

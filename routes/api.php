@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\AnnouncementController;
 use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\MappingShiftController;
-use App\Http\Controllers\API\PengajuanAbsensiController;
+use App\Http\Controllers\API\AttendanceRequest;
 use App\Http\Controllers\API\ShiftController;
 use App\Http\Controllers\API\ShiftPatternController;
 use App\Http\Controllers\API\TwoWeekShiftPatternController;
@@ -30,8 +30,12 @@ Route::prefix('announcement')->group(function () {
     Route::get('/get_users_and_their_position', [AnnouncementController::class, 'get_users_and_their_position']);
 });
 
-Route::prefix('pengajuan_absensi')->group(function () {
-    Route::post('/', [PengajuanAbsensiController::class, 'insert']);
+Route::prefix('attendance_request')->group(function () {
+    Route::get('/', [AttendanceRequest::class, 'get']);
+    Route::get('/admin_view', [AttendanceRequest::class, 'get_for_admin_view']);
+    Route::post('/', [AttendanceRequest::class, 'insert']);
+    Route::post('/approve/{id}', [AttendanceRequest::class, 'approve']);
+    Route::post('/reject/{id}', [AttendanceRequest::class, 'reject']);
 });
 
 Route::prefix('shift')->group(function () {
