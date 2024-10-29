@@ -12,8 +12,8 @@ class LocalStorageRepository implements StorageRepository {
 
     public function upload($file, $folder) : String {
         $fileContents = file_get_contents($file);
-        $fileName = $folder.'/'.time().'_'.$file->getClientOriginalName();
-        Storage::disk('local')->put($fileName, $fileContents);
+        $fileName = 'public/'.$folder.'/'.time().'_'.$file->getClientOriginalName();
+        Storage::disk('local')->put($fileName, $fileContents, 'public');
         return $fileName;
     }
 }

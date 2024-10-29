@@ -64,7 +64,7 @@ const app = createApp({
                     const url = `/api/attendance_request/reject/${this.requests[this.selected_request_index].id}`;
                     const data = { 'reason': this.reasonModel };
                     if (data['reason'] === '') {
-                        alert('Alasan pengajuan tidak boleh kosong');
+                        alert('Alasan penolakan tidak boleh kosong');
                         return;
                     }
                     const response = await fetch(url, {
@@ -81,6 +81,38 @@ const app = createApp({
                         alert(responseJSON.message);
                     }
                 }
+            }
+        },
+        downloadFile(index) {
+            if (index > -1) {
+                const path = this.requests[index].file;
+                console.log({ path });
+                const myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                const raw = JSON.stringify({path});
+
+                const requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: "follow"
+                };
+
+                fetch("/api/download", requestOptions)
+                    .then((response) => response.blob())
+                    .then((blob) => {
+                        const url = window.URL.createObjectURL(blob); // Create a URL for the Blob
+                        const a = document.createElement('a'); // Create a temporary anchor element
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = path.substring(33); // Set the download attribute with a filename
+                        document.body.appendChild(a);
+                        a.click(); // Trigger the download
+                        window.URL.revokeObjectURL(url); // Release the Blob URL after the download
+                        document.body.removeChild(a); // Remove the temporary anchor
+                    })
+                    .catch((error) => console.error(error));
             }
         },
     },

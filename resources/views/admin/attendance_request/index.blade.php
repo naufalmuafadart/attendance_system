@@ -27,7 +27,7 @@
             height: 80%; /* Large height */
             background-color: #fff;
             padding: 20px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             overflow-y: auto; /* Allows scrolling for overflow */
             border-radius: 8px;
         }
@@ -82,7 +82,11 @@
                             <td>@{{ request['clock_in'] == null ? '-' : request['clock_in'] }}</td>
                             <td>@{{ request['clock_out'] == null ? '-' : request['clock_out'] }}</td>
                             <td>@{{ request['reason'] }}</td>
-                            <td><button class="btn btn-primary"><i data-feather="download" style="height: 1rem"></i></button></td>
+                            <td>
+                                <button class="btn btn-primary" @click="downloadFile(index)">
+                                    <i data-feather="download" style="height: 1rem"></i>
+                                </button>
+                            </td>
                             <td v-if="request['status']==='pending'"><span class="badge badge-pill badge-warning">Pending</span></td>
                             <td v-if="request['status']==='approved'"><span class="badge badge-pill badge-success">Diterima</span></td>
                             <td v-if="request['status']==='rejected'"><span class="badge badge-pill badge-danger">Ditolak</span></td>
@@ -132,7 +136,7 @@
                 </tr>
                 <tr>
                     <td>File</td>
-                    <td style="text-align: right;"><button>Download</button></td>
+                    <td style="text-align: right;"><button @click="downloadFile(selected_request_index)">Download</button></td>
                 </tr>
                 <tr>
                     <td>Status</td>

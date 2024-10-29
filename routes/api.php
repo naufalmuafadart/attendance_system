@@ -69,6 +69,7 @@ Route::prefix('two_week_shift_pattern')->group(function () {
 
 Route::prefix('download')->group(function () {
     Route::get('/from_announcement', [DownloadController::class, 'from_announcement']);
+    Route::post('/', [DownloadController::class, 'get']);
 });
 
 Route::get('users', [UsersController::class, 'index']);
