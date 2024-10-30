@@ -28,7 +28,7 @@ class dashboardController extends Controller
         $tgl_skrg = date("Y-m-d");
 
         if(auth()->user()->is_admin == "admin"){
-            return view('dashboard.index', [
+            return view('admin.index', [
                 'title' => 'Dashboard',
                 'jumlah_user' => User::count(),
                 'jumlah_masuk' => MappingShift::where('tanggal', $tgl_skrg)->where('status_absen', 'Masuk')->count(),
@@ -81,7 +81,7 @@ class dashboardController extends Controller
     }
 
     public function menu() {
-        return view('dashboard.menu', [
+        return view('user.menu', [
             'title' => 'All Menu',
         ]);
     }
