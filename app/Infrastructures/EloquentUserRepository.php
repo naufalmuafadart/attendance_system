@@ -88,4 +88,8 @@ class EloquentUserRepository implements UserRepository {
             throw new NotFoundException('shift pattern not found');
         }
     }
+
+    public function getBirthdayToday() {
+        return User::whereRaw('MONTH(tgl_lahir) = MONTH(CURRENT_DATE) AND DAY(tgl_lahir) = DAY(CURRENT_DATE)')->get();
+    }
 }

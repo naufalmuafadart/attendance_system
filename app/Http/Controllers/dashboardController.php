@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\MappingShift;
+use App\UseCases\front_end\user\Dashboard\GetDashboardUserDataUseCase;
 use Illuminate\Http\Request;
 use App\Models\Cuti;
 use App\Models\Lembur;
@@ -13,8 +14,16 @@ use App\Models\Acara;
 
 class dashboardController extends Controller
 {
-    public function index()
-    {
+    /**
+     * @var GetDashboardUserDataUseCase
+     */
+    private $getDashboardUserDataUseCase;
+
+    public function __construct(GetDashboardUserDataUseCase $getDashboardUserDataUseCase) {
+        $this->getDashboardUserDataUseCase = $getDashboardUserDataUseCase;
+    }
+
+    public function index() {
         date_default_timezone_set('Asia/Jakarta');
         $tgl_skrg = date("Y-m-d");
 
@@ -52,23 +61,26 @@ class dashboardController extends Controller
             }
 
             $blog = Blog::where('is_published', true)
-            ->orderBy('created_at', 'desc')
-            ->get();
+                ->orderBy('created_at', 'desc')
+                ->get();
 
             $acara = Acara::orderBy('start_time', 'desc')
-              ->take(10)
-              ->get();
-            return view('dashboard.indexUser', [
+                ->take(10)
+                ->get();
+
+            $data = $this->getDashboardUserDataUseCase->execute();
+
+            return view('user.index', [
                 'title' => 'Dashboard',
                 'shift_karyawan' => MappingShift::where('user_id', $user_login)->where('tanggal', $tanggal)->first(),
                 'news' => $blog,
-                'acara' => $acara
+                'acara' => $acara,
+                'data' => $data,
             ]);
         }
     }
 
-    public function menu()
-    {
+    public function menu() {
         return view('dashboard.menu', [
             'title' => 'All Menu',
         ]);

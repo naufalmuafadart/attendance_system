@@ -205,6 +205,9 @@
                         <h3>Informasi</h3>
                     <a href="{{ url('/euforia') }}" class="primary_color fw_6">View All</a>
                 </div>
+                @foreach($data['birthday_users'] as $_user)
+                    <p>{{ $_user->name }} berulang tahun hari ini</p>
+                @endforeach
             </div>
             @if ($news->isNotEmpty())
             <div class="mt-5">
