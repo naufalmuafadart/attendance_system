@@ -5,6 +5,7 @@
 @endpush
 
 @push('style')
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         .custom-modal-overlay {
             position: fixed;
@@ -74,28 +75,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(request, index) in requests">
-                            <td>@{{ index + 1 }}</td>
-                            <td>@{{ request['user_name'] }}</td>
-                            <td>@{{ request['date'] }}</td>
-                            <td>@{{ request['shift_name'] }}</td>
-                            <td>@{{ request['clock_in'] == null ? '-' : request['clock_in'] }}</td>
-                            <td>@{{ request['clock_out'] == null ? '-' : request['clock_out'] }}</td>
-                            <td>@{{ request['reason'] }}</td>
-                            <td>
-                                <button class="btn btn-primary" @click="downloadFile(index)">
-                                    <i data-feather="download" style="height: 1rem"></i>
-                                </button>
-                            </td>
-                            <td v-if="request['status']==='pending'"><span class="badge badge-pill badge-warning">Pending</span></td>
-                            <td v-if="request['status']==='approved'"><span class="badge badge-pill badge-success">Diterima</span></td>
-                            <td v-if="request['status']==='rejected'"><span class="badge badge-pill badge-danger">Ditolak</span></td>
-                            <td>
-                                <button class="btn btn-info" @click="openModal(index)">
-                                    <i data-feather="external-link" style="height: 1em"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <tr
+                                v-for="(request, index) in requests"
+                                is="vue:row-user"
+                                @download-file="downloadFile"
+                                @open-modal="openModal"
+                                :index="index"
+                                :user_name="request['user_name']"
+                                :date="request['date']"
+                                :shift_name="request['shift_name']"
+                                :clock_in="request['clock_in']"
+                                :clock_out="request['clock_out']"
+                                :reason="request['reason']"
+                                :status="request['status']"
+                                :file="request['file']"></tr>
                         </tbody>
                     </table>
                 </div>

@@ -1,5 +1,98 @@
 const { createApp, ref } = Vue;
 
+const rowUser = {
+    props: {
+        index: Number,
+        user_name: String,
+        date: String,
+        shift_name: String,
+        clock_in: String,
+        clock_out: String,
+        reason: String,
+        status: String,
+        file: String,
+    },
+    data() {
+        return {
+            imageURL: '',
+        };
+    },
+    async mounted() {
+        if (this.isFileIsAnImage(this.file)) {
+            await this.displayImage();
+        }
+    },
+    template: `
+    <tr>
+        <td>{{ index + 1 }}</td>
+        <td>{{ user_name }}</td>
+        <td>{{ date }}</td>
+        <td>{{ shift_name }}</td>
+        <td>{{ clock_in == null ? '-' : clock_in }}</td>
+        <td>{{ clock_out == null ? '-' : clock_out }}</td>
+        <td>{{ reason }}</td>
+        
+        <td v-if="!isFileIsAnImage(file)">
+            <button class="btn btn-primary" @click="downloadFile">
+                <i class="fa fa-download" style="font-size: 1rem;"></i>
+            </button>
+        </td>
+        <td v-else="">
+            <img :src="imageURL" alt="prove_image" style="max-width: 5rem;"/>
+        </td>
+        
+        <td v-if="status==='pending'"><span class="badge badge-pill badge-warning">Pending</span></td>
+        <td v-else-if="status==='approved'"><span class="badge badge-pill badge-success">Diterima</span></td>
+        <td v-else="status==='rejected'"><span class="badge badge-pill badge-danger">Ditolak</span></td>
+        
+        <td>
+            <button class="btn btn-info" @click="openModal">
+                  <i class="material-icons" style="font-size: 1rem;">call_made</i>
+            </button>
+        </td>
+    </tr>
+    `,
+    methods: {
+        downloadFile() {
+            this.$emit('download-file', this.index);
+        },
+        openModal() {
+            this.$emit('open-modal', this.index);
+        },
+        isFileIsAnImage(fileName) {
+            // Define the common image extensions
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg', 'tiff'];
+
+            // Get the file extension in lowercase
+            const extension = fileName.split('.').pop().toLowerCase();
+
+            // Check if the extension is in the list of image extensions
+            return imageExtensions.includes(extension);
+        },
+        async displayImage() {
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            const raw = JSON.stringify({
+                "path": this.file
+            });
+
+            const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };
+
+            const response = await fetch("/api/download", requestOptions);
+            if (response.ok) {
+                const blob = await response.blob();
+                this.imageURL = URL.createObjectURL(blob);
+            }
+        }
+    }
+}
+
 const app = createApp({
     data() {
         return {
@@ -86,7 +179,6 @@ const app = createApp({
         downloadFile(index) {
             if (index > -1) {
                 const path = this.requests[index].file;
-                console.log({ path });
                 const myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/json");
 
@@ -117,5 +209,7 @@ const app = createApp({
         },
     },
 });
+
+app.component('row-user', rowUser);
 
 app.mount('#app');
