@@ -1,4 +1,12 @@
 @extends('templates.app')
+
+@push('pre-script')
+    <script type="text/javascript">
+        const user_id = Number('{{ auth()->user()->id }}');
+    </script>
+    <script src="/js/pages/user/pengajuan_absensi/index.js" type="module"></script>
+@endpush
+
 @section('container')
     <div class="card-secton transfer-section">
         <div class="tf-container">
@@ -7,16 +15,15 @@
 
                 <div class="bill-content">
                     <form action="{{ url('/pengajuan-absensi') }}">
-                        <div class="row">
-                            <div class="col-10">
+                        <div class="d-flex justify-content-between">
+                            <div class="col-6">
                                 <div class="input-field">
-                                    <span class="icon-search"></span>
-                                    <input required class="search-field value_input" placeholder="Search" name="search" type="text" value="{{ request('search') }}">
-                                    <span class="icon-clear"></span>
+                                    <input class="" placeholder="Search" name="search" type="date" v-model="firstDateModel">
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                            <div>-</div>
+                            <div class="col-6">
+                                <input class="" placeholder="Search" name="search" type="date" v-model="lastDateModel">
                             </div>
                         </div>
                     </form>
@@ -25,10 +32,32 @@
             </div>
         </div>
     </div>
-    <div id="app-wrap">
+    <div id="app-wrap" style="padding-top: 5px;">
         <div class="bill-content">
             <div class="tf-container">
-                <a href="{{ url('/pengajuan-absensi/add') }}" class="btn btn-sm btn-primary ms-4" style="border-radius: 10px">+ Tambah</a>
+                <a href="{{ url('/pengajuan-absensi/add') }}" class="btn btn-sm btn-primary ms-4 mb-3" style="border-radius: 10px">+ Tambah</a>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Clock in</th>
+                        <th>Clock out</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(request, index) in filteredRequests">
+                        <td>@{{ index + 1 }}</td>
+                        <td>@{{ request['date'] }}</td>
+                        <td>@{{ request['clock_in'] == null ? '-' : request['clock_in'] }}</td>
+                        <td>@{{ request['clock_out'] == null ? '-' : request['clock_out'] }}</td>
+                        <td v-if="request['status']==='pending'">Pending</td>
+                        <td v-if="request['status']==='approved'">Diterima</td>
+                        <td v-if="request['status']==='rejected'">Ditolak</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -54,6 +54,8 @@
 </head>
 
 <body>
+<script src="/js/library/vue/vue.global.js"></script>
+@stack('pre-script')
 <div class="preload preload-container">
     <div class="preload-logo"></div>
 </div>
@@ -112,7 +114,9 @@
     </div>
 @endif
 
-@yield('container')
+<div id="app">
+    @yield('container')
+</div>
 
 <div class="bottom-navigation-bar">
     <div class="tf-container">

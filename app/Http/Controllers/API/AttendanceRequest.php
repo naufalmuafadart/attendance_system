@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
 use App\UseCases\AttendanceRequest\ApproveUseCase;
+use App\UseCases\AttendanceRequest\GetForUserViewUseCase;
 use App\UseCases\AttendanceRequest\GetForAdminViewUseCase;
 use App\UseCases\AttendanceRequest\GetUseCase;
 use App\UseCases\AttendanceRequest\RejectUseCase;
@@ -30,17 +31,24 @@ class AttendanceRequest extends Controller {
      */
     private $rejectUseCase;
 
+    /**
+     * @var GetForUserViewUseCase
+     */
+    private $getByUserIdUseCase;
+
     public function __construct(
-        InsertUseCase $insertUseCase,
-        GetUseCase $getUseCase,
+        InsertUseCase          $insertUseCase,
+        GetUseCase             $getUseCase,
         GetForAdminViewUseCase $getForAdminViewUseCase,
-        ApproveUseCase $approveUseCase,
-        RejectUseCase $rejectUseCase) {
+        ApproveUseCase         $approveUseCase,
+        RejectUseCase          $rejectUseCase,
+        GetForUserViewUseCase  $getByUserIdUseCase) {
         $this->insertUseCase = $insertUseCase;
         $this->getUseCase = $getUseCase;
         $this->getForAdminViewUseCase = $getForAdminViewUseCase;
         $this->approveUseCase = $approveUseCase;
         $this->rejectUseCase = $rejectUseCase;
+        $this->getByUserIdUseCase = $getByUserIdUseCase;
     }
 
     public function insert(Request $request) {
@@ -104,6 +112,23 @@ class AttendanceRequest extends Controller {
             $reason = $request->get('reason');
             $this->rejectUseCase->execute($id, $reason);
             return ApiFormatter::createApi(200, 'Success reject attendance request', [], 'success');
+        } catch (\Exception $exception) {
+            if ($exception instanceof CustomException) {
+                return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');
+            }
+            return APIFormatter::createApi(500, $exception->getMessage(), [], 'fail');
+        }
+    }
+
+    public function get_for_user_view($user_id) {
+        try {
+            $requests = $this->getByUserIdUseCase->execute($user_id);
+            return ApiFormatter::createApi(
+                200,
+                'Success get attendance for user view',
+                $requests,
+                'success'
+            );
         } catch (\Exception $exception) {
             if ($exception instanceof CustomException) {
                 return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');

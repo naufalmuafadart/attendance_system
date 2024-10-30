@@ -34,7 +34,8 @@ class PengajuanAbsensiController extends Controller
 
         return view('user.pengajuan_absensi.index', compact(
             'mapping_shift',
-            'title'
+            'title',
+            'user_id'
         ));
     }
 

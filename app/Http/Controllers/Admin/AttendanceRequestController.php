@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class AttendanceRequestController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         return view('admin.attendance_request.index', ['title' => 'Pengajuan Absensi']);
     }
 }

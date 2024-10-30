@@ -33,6 +33,7 @@ Route::prefix('announcement')->group(function () {
 Route::prefix('attendance_request')->group(function () {
     Route::get('/', [AttendanceRequest::class, 'get']);
     Route::get('/admin_view', [AttendanceRequest::class, 'get_for_admin_view']);
+    Route::get('/user_view/{id}', [AttendanceRequest::class, 'get_for_user_view']);
     Route::post('/', [AttendanceRequest::class, 'insert']);
     Route::post('/approve/{id}', [AttendanceRequest::class, 'approve']);
     Route::post('/reject/{id}', [AttendanceRequest::class, 'reject']);

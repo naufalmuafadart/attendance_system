@@ -2,6 +2,7 @@
 
 namespace App\Infrastructures;
 
+use App\Entities\AttendanceRequest\AttendanceRequestEntity;
 use App\Entities\PengajuanAbsen\RegisterPengajuanAbsenEntity;
 use App\Exceptions\NotFoundException;
 use App\Models\AttendanceRequest;
@@ -93,5 +94,26 @@ class EloquentAttendanceRequestRepository implements AttendanceRequestRepository
         } catch (ModelNotFoundException $e) {
             throw new NotFoundException('Attendance request not found');
         }
+    }
+
+    public function get_by_user_id($user_id) {
+        $requests = AttendanceRequest::where('user_id', $user_id)->get();
+        $data = [];
+        for ($i = 0; $i < count($requests); $i++) {
+            $data[] = new AttendanceRequestEntity(
+                $requests[$i]->user_id,
+                $requests[$i]->mapping_shift_id,
+                $requests[$i]->clock_in,
+                $requests[$i]->clock_out,
+                $requests[$i]->reason,
+                $requests[$i]->file,
+                $requests[$i]->status,
+                $requests[$i]->approved_by,
+                $requests[$i]->reject_reason,
+                $requests[$i]->created_at,
+                $requests[$i]->updated_at
+            );
+        }
+        return $data;
     }
 }
