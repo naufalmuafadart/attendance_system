@@ -40,8 +40,8 @@ class AnnouncementController extends Controller
         $announcement = new Announcement($validated);
 
         if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('uploads', 'public');
-            $announcement->file = $filePath;
+            $filePath = $request->file('file')->store('uploads/announcement', 'public');
+            $announcement->file = 'public/'.$filePath;
         }
 
         $announcement->created_by = auth()->user()->id;
