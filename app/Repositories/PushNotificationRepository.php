@@ -4,5 +4,5 @@ namespace App\Repositories;
 
 interface PushNotificationRepository
 {
-    public function send($message);
+    public function publish($notification_type, $user_id, $message, $action);
 }

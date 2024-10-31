@@ -11,11 +11,13 @@ use App\Infrastructures\EloquentTwoWeekShiftPatternRepository;
 use App\Infrastructures\EloquentUserRepository;
 use App\Infrastructures\LaravelNotificationRepository;
 use App\Infrastructures\LocalStorageRepository;
+use App\Infrastructures\PusherPushNotificationRepository;
 use App\Models\User;
 use App\Repositories\AnnouncementRepository;
 use App\Repositories\MappingShiftRepository;
 use App\Repositories\AttendanceRequestRepository;
 use App\Repositories\NotificationRepository;
+use App\Repositories\PushNotificationRepository;
 use App\Repositories\ShiftPatternRepository;
 use App\Repositories\ShiftRepository;
 use App\Repositories\StorageRepository;
@@ -44,6 +46,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ShiftPatternRepository::class,EloquentShiftPatternRepository::class);
         $this->app->bind(TwoWeekShiftPatternRepository::class,EloquentTwoWeekShiftPatternRepository::class);
         $this->app->bind(NotificationRepository::class,LaravelNotificationRepository::class);
+        $this->app->bind(PushNotificationRepository::class,PusherPushNotificationRepository::class);
     }
 
     /**
