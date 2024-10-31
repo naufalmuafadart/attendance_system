@@ -36,13 +36,12 @@ class InsertUseCase {
         );
         $this->pengajuanAbsenRepository->insert($entity);
         $user = $this->userRepository->getById($user_id);
-        $admin_id = env('ADMIN_ID');
-        $message = $user->name.' mengajukan pengajuan absensi untuk tanggal '.$date;
+        $admin_id = (int) env('ADMIN_ID', 1);
         $this->notificationRepository->publish(
             [$admin_id],
             $user_id,
             $user->name,
-            $message,
+            $user->name.' mengajukan pengajuan absensi untuk tanggal '.$date,
             '/admin/attendance_request'
         );
     }
