@@ -73,6 +73,10 @@ Route::prefix('download')->group(function () {
     Route::post('/', [DownloadController::class, 'get']);
 });
 
+Route::prefix('/notification')->group(function () {
+    Route::post('/', [\App\Http\Controllers\API\NotificationController::class, 'create']);
+});
+
 Route::get('users', [UsersController::class, 'index']);
 Route::post('tambah-users', [UsersController::class, 'store']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

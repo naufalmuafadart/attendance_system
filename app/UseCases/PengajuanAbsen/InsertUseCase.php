@@ -5,16 +5,22 @@ namespace App\UseCases\PengajuanAbsen;
 use App\Entities\PengajuanAbsen\RegisterPengajuanAbsenEntity;
 use App\Repositories\MappingShiftRepository;
 use App\Repositories\AttendanceRequestRepository;
+use App\Repositories\NotificationRepository;
 use App\Repositories\StorageRepository;
+use App\Repositories\UserRepository;
 
 class InsertUseCase {
     public function __construct(
         AttendanceRequestRepository $pengajuanAbsenRepository,
         StorageRepository           $storageRepository,
-        MappingShiftRepository      $mappingShiftRepository) {
+        MappingShiftRepository      $mappingShiftRepository,
+        NotificationRepository $notificationRepository,
+        UserRepository $userRepository) {
         $this->pengajuanAbsenRepository = $pengajuanAbsenRepository;
         $this->storageRepository = $storageRepository;
         $this->mappingShiftRepository = $mappingShiftRepository;
+        $this->notificationRepository = $notificationRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function execute($user_id, $date, $clock_in, $clock_out, $reason, $file) {
@@ -29,5 +35,15 @@ class InsertUseCase {
             $file
         );
         $this->pengajuanAbsenRepository->insert($entity);
+        $user = $this->userRepository->getById($user_id);
+        $admin_id = env('ADMIN_ID');
+        $message = $user->name.' mengajukan pengajuan absensi untuk tanggal '.$date;
+        $this->notificationRepository->publish(
+            [$admin_id],
+            $user_id,
+            $user->name,
+            $message,
+            '/admin/attendance_request'
+        );
     }
 }

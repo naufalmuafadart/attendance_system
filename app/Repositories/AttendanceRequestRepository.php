@@ -6,7 +6,7 @@ use App\Entities\PengajuanAbsen\RegisterPengajuanAbsenEntity;
 
 interface AttendanceRequestRepository
 {
-    public function insert(RegisterPengajuanAbsenEntity $pengajuanAbsenEntity);
+    public function insert(RegisterPengajuanAbsenEntity $pengajuanAbsenEntity): int;
     public function get();
     public function getWithUsernameAndShiftName();
     public function approve($id);

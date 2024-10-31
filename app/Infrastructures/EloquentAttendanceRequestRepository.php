@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class EloquentAttendanceRequestRepository implements AttendanceRequestRepository
 {
-    public function insert(RegisterPengajuanAbsenEntity $pengajuanAbsenEntity) {
+    public function insert(RegisterPengajuanAbsenEntity $pengajuanAbsenEntity): int {
         $model = new AttendanceRequest;
         $model->user_id = $pengajuanAbsenEntity->user_id;
         $model->mapping_shift_id = $pengajuanAbsenEntity->mapping_shift_id;
@@ -22,6 +22,7 @@ class EloquentAttendanceRequestRepository implements AttendanceRequestRepository
         $model->file = $pengajuanAbsenEntity->file;
         $model->status = $pengajuanAbsenEntity->status;
         $model->save();
+        return $model->id;
     }
 
     public function get()

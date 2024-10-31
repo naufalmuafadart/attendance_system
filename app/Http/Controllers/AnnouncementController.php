@@ -166,7 +166,6 @@ class AnnouncementController extends Controller
             } else {
                 // Notify specific users
                 $users = User::whereIn('jabatan_id', json_decode($announcement->target_users))->get();
-                // var_dump($users);die;
 
                 foreach ($users as $user) {
                      // Prepare notification data
