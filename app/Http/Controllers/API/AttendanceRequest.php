@@ -66,7 +66,7 @@ class AttendanceRequest extends Controller {
             if ($exception instanceof CustomException) {
                 return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');
             }
-            return APIFormatter::createApi(500, $exception->getMessage(), [], 'fail');
+            return APIFormatter::createApi(500, 'Internal server error', [], 'fail');
         }
     }
 
@@ -78,7 +78,7 @@ class AttendanceRequest extends Controller {
             if ($exception instanceof CustomException) {
                 return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');
             }
-            return APIFormatter::createApi(500, $exception->getMessage(), [], 'fail');
+            return APIFormatter::createApi(500, 'Internal server error', [], 'fail');
         }
     }
 
@@ -90,7 +90,7 @@ class AttendanceRequest extends Controller {
             if ($exception instanceof CustomException) {
                 return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');
             }
-            return APIFormatter::createApi(500, $exception->getMessage(), [], 'fail');
+            return APIFormatter::createApi(500, 'Internal server error', [], 'fail');
         }
     }
 
@@ -102,7 +102,7 @@ class AttendanceRequest extends Controller {
             if ($exception instanceof CustomException) {
                 return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');
             }
-            return APIFormatter::createApi(500, $exception->getMessage(), [], 'fail');
+            return APIFormatter::createApi(500, 'Internal server error', [], 'fail');
         }
     }
 

@@ -1,4 +1,12 @@
 @extends('templates.app')
+
+@push('pre-script')
+    <script type="text/javascript">
+        const user_id = Number('{{ auth()->user()->id }}');
+    </script>
+    <script src="/js/pages/user/pengajuan_absensi/add.js" type="module"></script>
+@endpush
+
 @section('container')
     <div id="app-wrap" style="padding-top: 0">
         <div class="bill-content">
@@ -8,6 +16,7 @@
                     id="formSubmit"
                     class="tf-form p-2"
                     action=""
+                    @submit.prevent="onSubmit"
                     enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" id="inputUserId" name="user_id" value="{{ auth()->user()->id }}">
@@ -17,23 +26,26 @@
 
                 <div class="group-input">
                     <label for="tanggal">Tanggal</label>
-                    <input type="date" id="inputDate" name="tanggal" value="">
+                    <input type="date" id="inputDate" name="tanggal" v-model="dateModel">
                     <div class="invalid-feedback">
                     </div>
                 </div>
 
-                <section id="mappingShiftExistSection" class="d-none">
+                <section id="mappingShiftExistSection" v-if="is_has_fetch_date && !is_no_shift">
                     {{--Shift--}}
                     <div class="group-input">
                         <label for="shift">Shift</label>
-                        <input type="text" id="inputShift" name="shift" value="" disabled>
+                        <input type="text" id="inputShift" name="shift" v-model="shiftModel" disabled>
                         <div class="invalid-feedback">
                         </div>
                     </div>
 
                     {{--Clock in check--}}
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="clockInCheckInput">
+                        <input
+                                type="checkbox"
+                                class="form-check-input"
+                                v-model="clockInCheckModel">
                         <label class="form-check-label" for="clockInCheckInput">Clock in</label>
                     </div>
 
@@ -41,19 +53,22 @@
                     <div class="group-input">
                         <label for="jam_masuk_pengajuan">Jam Masuk</label>
                         <input
-                                type="text"
+                                type="time"
                                 class="form-control clockpicker"
                                 id="clockInInput"
                                 name="jam_masuk_pengajuan"
                                 autofocus
-                                value="">
+                                v-model="clockInModel">
                         <div class="invalid-feedback">
                         </div>
                     </div>
 
                     {{--Clock out check--}}
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="clockOutCheckInput">
+                        <input
+                                type="checkbox"
+                                class="form-check-input"
+                                v-model="clockOutCheckModel">
                         <label class="form-check-label" for="clockOutCheckInput">Clock out</label>
                     </div>
 
@@ -61,12 +76,12 @@
                     <div class="group-input">
                         <label for="jam_pulang_pengajuan">Jam Pulang</label>
                         <input
-                                type="text"
+                                type="time"
                                 class="form-control clockpicker"
                                 id="clockOutInput"
                                 name="jam_pulang_pengajuan"
                                 autofocus
-                                value="">
+                                v-model="clockOutModel">
                         <div class="invalid-feedback">
                         </div>
                     </div>
@@ -74,34 +89,32 @@
                     {{--Deskripsi--}}
                     <div class="group-input">
                         <label for="deskripsi">Deskripsi</label>
-                        <textarea name="deskripsi" id="inputReason" class=""></textarea>
+                        <textarea name="deskripsi" id="inputReason" v-model="descriptionModel"></textarea>
                         <div class="invalid-feedback">
                         </div>
                     </div>
 
                     {{--File--}}
                     <div class="group-input">
-                        <input type="file" class="form-control" id="inputFile" name="file_pengajuan">
+                        <label for="">File bukti</label>
+                        <input
+                                type="file"
+                                class="form-control"
+                                id="inputFile"
+                                @change="onFileChange"
+                                name="file_pengajuan">
                         <div class="invalid-feedback">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button type="submit" class="btn btn-primary float-right" :disabled="is_btn_submit_disabled">Submit</button>
                 </section>
-                <section id="mappingShiftExistNotSection" class="d-none justify-content-center">
+                <section v-if="is_has_fetch_date && is_no_shift" class="d-flex justify-content-center">
                     <p>Tidak ada shift</p>
                 </section>
             </form>
         </div>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 @endsection
 
 @push('script')
@@ -122,5 +135,4 @@
             });
         });
     </script>
-    <script src="/js/pages/user/pengajuan_absensi/add.js"></script>
 @endpush
