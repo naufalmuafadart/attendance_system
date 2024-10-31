@@ -22,7 +22,12 @@ class NotificationController extends Controller
 
     public function create(Request $request) {
         try {
-            $this->createUseCase->execute();
+            $destination_ids = $request->input('destination_ids');
+            $from_id = $request->input('from_id');
+            $from = $request->input('from');
+            $message = $request->input('message');
+            $action = $request->input('action');
+            $this->createUseCase->execute($destination_ids, $from_id, $from, $message, $action);
             return ApiFormatter::createApi(201, 'Success create notification', [], 'success');
         } catch (\Exception $exception) {
             if ($exception instanceof CustomException) {

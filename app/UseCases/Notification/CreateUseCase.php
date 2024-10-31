@@ -15,7 +15,7 @@ class CreateUseCase
         $this->notificationRepository = $notificationRepository;
     }
 
-    public function execute() {
-        $this->notificationRepository->publish([1], 1659, 'Widi', 'Test', '/dashboard');
+    public function execute($destination_ids, $from_id, $from, $message, $action) {
+        $this->notificationRepository->publish($destination_ids, $from_id, $from, $message, $action);
     }
 }
