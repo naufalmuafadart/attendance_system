@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\AnnouncementController;
 use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\MappingShiftController;
-use App\Http\Controllers\API\AttendanceRequest;
+use App\Http\Controllers\API\AttendanceRequestController;
 use App\Http\Controllers\API\ShiftController;
 use App\Http\Controllers\API\ShiftPatternController;
 use App\Http\Controllers\API\TwoWeekShiftPatternController;
@@ -31,12 +31,12 @@ Route::prefix('announcement')->group(function () {
 });
 
 Route::prefix('attendance_request')->group(function () {
-    Route::get('/', [AttendanceRequest::class, 'get']);
-    Route::get('/admin_view', [AttendanceRequest::class, 'get_for_admin_view']);
-    Route::get('/user_view/{id}', [AttendanceRequest::class, 'get_for_user_view']);
-    Route::post('/', [AttendanceRequest::class, 'insert']);
-    Route::post('/approve/{id}', [AttendanceRequest::class, 'approve']);
-    Route::post('/reject/{id}', [AttendanceRequest::class, 'reject']);
+    Route::get('/', [AttendanceRequestController::class, 'get']);
+    Route::get('/admin_view', [AttendanceRequestController::class, 'get_for_admin_view']);
+    Route::get('/user_view/{id}', [AttendanceRequestController::class, 'get_for_user_view']);
+    Route::post('/', [AttendanceRequestController::class, 'insert']);
+    Route::post('/approve/{id}', [AttendanceRequestController::class, 'approve']);
+    Route::post('/reject/{id}', [AttendanceRequestController::class, 'reject']);
 });
 
 Route::prefix('shift')->group(function () {

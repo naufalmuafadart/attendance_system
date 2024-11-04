@@ -163,28 +163,33 @@ const app = createApp({
         async onSubmit() {
             this.is_btn_submit_disabled = true;
 
-            if (!this.clockInCheckModel && this.clockOutCheckModel) {
+            if (!this.clockInCheckModel && !this.clockOutCheckModel) {
                 alert('Clock in dan clock out harus dipilih salah satu atau keduanya');
+                this.is_btn_submit_disabled = true;
                 return;
             }
 
             if (this.clockInCheckModel && !this.clockInModel) {
                 alert('Clock in harus diisi');
+                this.is_btn_submit_disabled = true;
                 return;
             }
 
             if (this.clockOutCheckModel && !this.clockOutModel) {
                 alert('Clock out harus diisi');
+                this.is_btn_submit_disabled = true;
                 return;
             }
 
             if (!this.descriptionModel) {
                 alert('Deskripsi / alasan wajib diisi');
+                this.is_btn_submit_disabled = true;
                 return;
             }
 
             if (!this.blob_url || !this.file_name) {
                 alert('File bukti harus diunggah');
+                this.is_btn_submit_disabled = true;
                 return;
             }
 

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Infrastructures\CarbonDateTimeRepository;
 use App\Infrastructures\CURLHolidayDateRepository;
 use App\Infrastructures\EloquentAnnouncementRepository;
 use App\Infrastructures\EloquentMappingShiftRepository;
@@ -15,6 +16,7 @@ use App\Infrastructures\LocalStorageRepository;
 use App\Infrastructures\PusherPushNotificationRepository;
 use App\Models\User;
 use App\Repositories\AnnouncementRepository;
+use App\Repositories\DateTimeRepository;
 use App\Repositories\HolidayDateRepository;
 use App\Repositories\MappingShiftRepository;
 use App\Repositories\AttendanceRequestRepository;
@@ -50,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(NotificationRepository::class,LaravelNotificationRepository::class);
         $this->app->bind(PushNotificationRepository::class,PusherPushNotificationRepository::class);
         $this->app->bind(HolidayDateRepository::class, CURLHolidayDateRepository::class);
+        $this->app->bind(DateTimeRepository::class, CarbonDateTimeRepository::class);
     }
 
     /**

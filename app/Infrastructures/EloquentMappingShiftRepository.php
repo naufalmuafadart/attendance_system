@@ -69,22 +69,20 @@ class EloquentMappingShiftRepository implements MappingShiftRepository {
     /**
      * @throws NotFoundException
      */
-    public function update_clock_in($id, $clock_in)
-    {
+    public function update_clock_in($id, $clock_in, $shift_clock_in) {
        try {
            $ms = MappingShift::findOrFail($id);
-           $ms->jam_absen = $clock_in;
+           $ms->jam_absen = $clock_in->format('H:i:s');
            $ms->save();
        } catch (ModelNotFoundException $e) {
            throw new NotFoundException('Mapping Shift not found');
        }
     }
 
-    public function update_clock_out($id, $clock_out)
-    {
+    public function update_clock_out($id, $clock_out, $shift_clock_out) {
         try {
             $ms = MappingShift::findOrFail($id);
-            $ms->jam_pulang = $clock_out;
+            $ms->jam_pulang = $clock_out->format('H:i:s');
             $ms->save();
         } catch (ModelNotFoundException $e) {
             throw new NotFoundException('Mapping Shift not found');
@@ -95,6 +93,51 @@ class EloquentMappingShiftRepository implements MappingShiftRepository {
     {
         try {
             return MappingShift::findOrFail($id)->tanggal;
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('Mapping Shift not found');
+        }
+    }
+
+    public function get_shift_id_by_id($id) {
+        try {
+            return MappingShift::findOrFail($id)->shift_id;
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('Mapping Shift not found');
+        }
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function update_late_offset_second($id, $late_offset_second)
+    {
+        try {
+            $ms = MappingShift::findOrFail($id);
+            $ms->telat = $late_offset_second;
+            $ms->save();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('Mapping Shift not found');
+        }
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function update_early_offset_second($id, $early_offset_second) {
+        try {
+            $ms = MappingShift::findOrFail($id);
+            $ms->pulang_cepat = $early_offset_second;
+            $ms->save();
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundException('Mapping Shift not found');
+        }
+    }
+
+    public function update_status($id, $status) {
+        try {
+            $ms = MappingShift::findOrFail($id);
+            $ms->status_absen = $status;
+            $ms->save();
         } catch (ModelNotFoundException $e) {
             throw new NotFoundException('Mapping Shift not found');
         }

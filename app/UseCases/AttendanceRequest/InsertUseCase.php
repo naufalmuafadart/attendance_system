@@ -1,10 +1,10 @@
 <?php
 
-namespace App\UseCases\PengajuanAbsen;
+namespace App\UseCases\AttendanceRequest;
 
 use App\Entities\PengajuanAbsen\RegisterPengajuanAbsenEntity;
-use App\Repositories\MappingShiftRepository;
 use App\Repositories\AttendanceRequestRepository;
+use App\Repositories\MappingShiftRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\PushNotificationRepository;
 use App\Repositories\StorageRepository;

@@ -6,14 +6,14 @@ use App\Exceptions\CustomException;
 use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
 use App\UseCases\AttendanceRequest\ApproveUseCase;
-use App\UseCases\AttendanceRequest\GetForUserViewUseCase;
 use App\UseCases\AttendanceRequest\GetForAdminViewUseCase;
+use App\UseCases\AttendanceRequest\GetForUserViewUseCase;
 use App\UseCases\AttendanceRequest\GetUseCase;
+use App\UseCases\AttendanceRequest\InsertUseCase;
 use App\UseCases\AttendanceRequest\RejectUseCase;
-use App\UseCases\PengajuanAbsen\InsertUseCase;
 use Illuminate\Http\Request;
 
-class AttendanceRequest extends Controller {
+class AttendanceRequestController extends Controller {
     protected $insertUseCase;
     protected $getUseCase;
     /**
@@ -102,7 +102,8 @@ class AttendanceRequest extends Controller {
             if ($exception instanceof CustomException) {
                 return APIFormatter::createApi($exception->getCode(), $exception->getMessage(), [], 'fail');
             }
-            return APIFormatter::createApi(500, 'Internal server error', [], 'fail');
+//            return APIFormatter::createApi(500, 'Internal server error', [], 'fail');
+            return APIFormatter::createApi(500, $exception->getMessage(), [], 'fail');
         }
     }
 
