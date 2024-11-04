@@ -40,26 +40,40 @@
     </div>
     <div id="app-wrap" class="style1">
         <div class="tf-container">
-            <div class="tab-gift-item">
-                @foreach ($data_user as $user)
-                    @php
-                        $tgl_lahir = new DateTime($user->tgl_lahir);
-                    @endphp
-                    <div class="food-box">
-                        <div class="img-box">
-                            @if($user->foto_karyawan == null)
-                                <img src="{{ url('/assets/img/foto_default.jpg') }}"  alt="image">
-                            @else
-                                <img src="{{ url('/storage/'.$user->foto_karyawan) }}"  alt="image">
-                            @endif
-                            <span>&nbsp;</span>
-                        </div>
-                        <div class="content">
-                            <h4><a href="{{ url('/pegawai/show/'.$user->id) }}">{{ $user->name }}</a></h4>
-                            <span>{{ $tgl_lahir->format('d M Y') }}</span>
-                        </div>
+            <div class="tf-tab">
+                <ul class="menu-tabs tabs-food">
+                    <li class="nav-tab active">Ulang tahun</li>
+                    <li class="nav-tab">Hari Nasional</li>
+                </ul>
+                <div class="content-tab pt-tab-space mb-5">
+                    <div class="tab-gift-item">
+                        @foreach ($data_user as $user)
+                            @php
+                                $tgl_lahir = new DateTime($user->tgl_lahir);
+                            @endphp
+                            <div class="food-box">
+                                <div class="img-box">
+                                    @if($user->foto_karyawan == null)
+                                        <img src="{{ url('/assets/img/foto_default.jpg') }}"  alt="image">
+                                    @else
+                                        <img src="{{ url('/storage/'.$user->foto_karyawan) }}"  alt="image">
+                                    @endif
+                                    <span>&nbsp;</span>
+                                </div>
+                                <div class="content">
+                                    <h4><a href="{{ url('/pegawai/show/'.$user->id) }}">{{ $user->name }}</a></h4>
+                                    <span>{{ $tgl_lahir->format('d M Y') }}</span>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
+                    <div class="tab-item">
+                        @foreach($holiday_dates as $date)
+                            <p style="color: black;">Tanggal {{ $date['holiday_date'] }}: {{ $date['holiday_name'] }}</p>
+                        @endforeach
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

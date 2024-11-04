@@ -12,6 +12,7 @@ use App\Models\MappingShift;
 use App\Models\ResetCuti;
 use App\Models\Shift;
 use App\Models\Sip;
+use App\UseCases\front_end\Information\GetInformationPageDataUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +23,15 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
 
 class karyawanController extends Controller {
+    /**
+     * @var GetInformationPageDataUseCase
+     */
+    private $getInformationPageDataUseCase;
+
+    public function __construct(GetInformationPageDataUseCase $getInformationPageDataUseCase) {
+        $this->getInformationPageDataUseCase = $getInformationPageDataUseCase;
+    }
+
     public function index()
     {
         $search = request()->input('search');
@@ -52,13 +62,12 @@ class karyawanController extends Controller {
     public function euforia()
     {
         date_default_timezone_set('Asia/Jakarta');
-        $data = User::
-            whereRaw('MONTH(tgl_lahir) = MONTH(CURRENT_DATE) AND DAY(tgl_lahir) = DAY(CURRENT_DATE)')
-            ->get();
+        $data = $this->getInformationPageDataUseCase->execute();
 
-        return view('karyawan.euforia', [
-            'title' => 'Euforia',
-            'data_user' => $data
+        return view('user.informasi.index', [
+            'title' => 'Informasi',
+            'data_user' => $data['birthday_users'],
+            'holiday_dates' => $data['holiday_dates'],
         ]);
 
     }
