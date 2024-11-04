@@ -24,13 +24,13 @@ class RegisteredAttendanceRequestEntity
         $this->user_id = $user_id;
         $this->mapping_shift_id = $mapping_shift_id;
 
-        if ($this->clock_in != null) {
+        if ($clock_in != null) {
             $this->clock_in = Carbon::createFromFormat('H:i:s', $clock_in);
         } else {
             $this->clock_in = null;
         }
 
-        if ($this->clock_out != null) {
+        if ($clock_out != null) {
             $this->clock_out = Carbon::createFromFormat('H:i:s', $clock_out);
         } else {
             $this->clock_out = null;
